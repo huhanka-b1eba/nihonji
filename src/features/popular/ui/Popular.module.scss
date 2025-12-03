@@ -1,0 +1,124 @@
+.Popular {
+  position: relative;
+
+  .sectionTitle {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 2rem 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .animeCard {
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 270px;
+
+    &:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .animeImg {
+      display: block;
+      background: rgba(255, 255, 255, 0.05);
+      width: 100%;
+      height: 400px;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.3s ease;
+    }
+
+    &:hover .animeImg {
+      transform: scale(1.05);
+    }
+
+    .animeName {
+      font-size: 14px;
+      font-weight: 600;
+      margin: 1rem 0;
+    }
+
+    .animeRating {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      color: #ffd700;
+    }
+  }
+}
+
+.sliderWrapper {
+  position: relative;
+}
+
+.navBtn {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  width: 48px;
+  height: 48px;
+  z-index: 30;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .2s linear;
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-10px); /* небольшая анимация скрытия */
+}
+
+.prevBtn { left: 10px; }
+
+.nextBtn { right: 10px; }
+
+.prevBtn::before,
+.nextBtn::before {
+  content: "";
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-top: 2px solid #fff;
+  border-right: 2px solid #fff;
+  margin: 0 auto;
+  transition: all .2s linear;
+}
+
+.prevBtn::before {
+  transform: rotate(-135deg);
+}
+
+.nextBtn::before {
+  transform: rotate(45deg);
+}
+
+.navBtn:hover::after {
+  content: "";
+  position: absolute;
+  top: -100vh;
+  bottom: -100vh;
+  left: -200px;
+  right: -200px;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+                  to right,
+                  rgba(0,0,0,0.45),
+                  rgba(0,0,0,0)
+  );
+  transition: opacity .2s;
+}
+
+.prevBtn:hover::after { background: linear-gradient(to right, rgba(0,0,0,0.45), rgba(0,0,0,0)); }
+.nextBtn:hover::after { background: linear-gradient(to left, rgba(0,0,0,0.45), rgba(0,0,0,0)); }

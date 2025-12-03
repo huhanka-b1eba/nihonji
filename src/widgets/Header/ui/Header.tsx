@@ -1,6 +1,6 @@
 import {Link} from "react-router";
 import styles from './Header.module.scss';
-import {Moon} from "lucide-react";
+import {Bookmark, Moon} from "lucide-react";
 
 
 const Header = () => {
@@ -18,10 +18,12 @@ const Header = () => {
 
                 <div className={styles.right}>
                     <div className={styles.links}>
-                        <Link to="/catalog" className={styles.navLink}>Каталог</Link>
                         <Link to="/ongoing" className={styles.navLink}>Онгоинги</Link>
+                        <Link to="/ongoing" className={styles.navLink}>Популярное</Link>
+                        <Link to="/catalog" className={styles.navLink}>Каталог</Link>
                     </div>
                     <div className={styles.toggles}>
+                        <Link to="/catalog" className={styles.toggleTheme}><Bookmark /></Link>
                         <button className={styles.toggleLang}>RU</button>
                         <button className={styles.toggleTheme}>
                             <Moon />
