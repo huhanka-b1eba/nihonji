@@ -1,0 +1,83 @@
+
+.Intro {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.introMask {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+
+    background: linear-gradient(
+                    to top,
+                    rgba(0,0,0,0.7),
+                    rgba(0,0,0,0.25)
+    ),
+    radial-gradient(
+                    circle at center,
+                    rgba(0,0,0,0) 0%,
+                    rgba(0,0,0,0.5) 100%
+    );
+
+    backdrop-filter: blur(2px);
+}
+
+.introContent {
+    position: relative;
+    z-index: 20;
+    max-width: 700px;
+}
+
+.introTitle {
+    font-size: clamp(32px, 5vw, 64px);
+    line-height: 1.2;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 4px 24px rgba(0,0,0,0.6);
+}
+
+
+.introSubtitle {
+    margin-top: 20px;
+    font-size: clamp(16px, 2.2vw, 20px);
+    color: rgba(255,255,255,0.85);
+    max-width: 600px;
+    line-height: 1.5;
+}
+
+.introActions {
+    margin-top: 32px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.bgSwiper {
+    position: absolute !important;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+}
+
+.bgWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+.bgSlide {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
