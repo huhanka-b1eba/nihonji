@@ -19,7 +19,7 @@ const Header = () => {
                 <div className={styles.right}>
                     <div className={styles.links}>
                         <Link to="/novelty" className={styles.navLink}>Онгоинги</Link>
-                        <Link to="/ongoing" className={styles.navLink}>Популярное</Link>
+                        <Link to="/popular" className={styles.navLink}>Популярное</Link>
                         <Link to="/catalog" className={styles.navLink}>Каталог</Link>
                     </div>
                     <div className={styles.toggles}>
