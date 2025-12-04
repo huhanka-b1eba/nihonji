@@ -1,0 +1,164 @@
+.News {
+  width: 100%;
+  padding: 40px 0;
+  position: relative;
+
+  background: rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+
+  .bg {
+    position: absolute;
+    inset: 0;
+    background: url("/news-bg.jpg") center/cover no-repeat;
+    opacity: 0.15;
+    mix-blend-mode: lighten;
+    pointer-events: none;
+  }
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 26px;
+  padding: 0 20px;
+
+  h2 {
+    color: #fff;
+    font-size: 32px;
+    font-weight: 700;
+  }
+
+  .viewAll {
+    color: #ff9f43;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: opacity .2s ease;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.newsGrid {
+  display: grid;
+  grid-template-columns: 360px 1fr 1fr;
+  gap: 26px;
+  padding: 0 20px;
+}
+
+.bigNewsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.bigItem {
+  cursor: pointer;
+  transition: transform .2s ease;
+
+  img {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  .content {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    .title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .date {
+      color: #bdbdbd;
+      font-size: 14px;
+    }
+
+    .author {
+      color: #ff9f43;
+      font-size: 14px;
+    }
+  }
+}
+
+
+.smallColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.smallItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+
+  img {
+    width: 200px;
+    height: 110px;
+    border-radius: 6px;
+    object-fit: cover;
+    transition: filter .2s ease;
+  }
+
+  &:hover img {
+    filter: brightness(1.08);
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.25;
+    }
+
+    .date {
+      font-size: 12px;
+      color: #bdbdbd;
+    }
+
+    .author {
+      font-size: 12px;
+      color: #ffb36b;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .newsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .newsGrid {
+    grid-template-columns: 1fr;
+  }
+  .bigItem img {
+    height: 180px;
+  }
+}
