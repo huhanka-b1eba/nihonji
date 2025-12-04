@@ -1,0 +1,55 @@
+.NoveltyPage {
+  margin: 125px 0;
+  min-height: 100vh;
+}
+
+.NoveltyTitle {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 24px;
+
+  text-shadow: 0 0 10px rgba(180, 86, 255, 0.35);
+}
+
+.topRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.controlItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 18px;
+
+  transition: 0.25s ease;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  span {
+    color: #eaeaea;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.14);
+  }
+}

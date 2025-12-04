@@ -9,22 +9,12 @@
   z-index: 5;
 }
 
-.sectionTitle {
-  font-size: 36px;
-  font-weight: 700;
-  margin-bottom: 40px;
-  color: #fff;
-  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
-}
-
-/* ===== GRID ===== */
 .animeGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 28px;
 }
 
-/* ===== CARD ===== */
 .animeCard {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.05);
