@@ -1,8 +1,7 @@
 import cls from './NoveltyPage.module.scss';
 import {classNames} from "../../../shared/lib/classNames/classNames.ts";
 import {OngoingList} from "../../../widgets/OngoingList";
-import {ArrowDownWideNarrow, SlidersHorizontal} from "lucide-react";
-
+import {ListHeader} from "../../../shared/ui/ListHeader";
 
 interface NoveltyPageProps {
     className?: string;
@@ -81,20 +80,7 @@ export const NoveltyPage = ({className}: NoveltyPageProps) => {
     return (
         <div className={classNames(cls.NoveltyPage, {}, [className])}>
             <div className="container">
-                <div className={cls.topRow}>
-                    <h2 className={cls.NoveltyTitle}>Онгоинги</h2>
-
-                    <div className={cls.controls}>
-                        <div className={cls.controlItem}>
-                            <ArrowDownWideNarrow />
-                            <span>Сначала новые</span>
-                        </div>
-                        <div className={cls.controlItem}>
-                            <SlidersHorizontal />
-                            <span>Фильтр</span>
-                        </div>
-                    </div>
-                </div>
+                <ListHeader title="Онгоинги" sortName="Сначала новые"/>
                 <OngoingList items={ongoingsMock}/>
             </div>
         </div>
