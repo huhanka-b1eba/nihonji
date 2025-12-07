@@ -1,36 +1,36 @@
 import {Link} from "react-router";
-import styles from './Header.module.scss';
-import {Bookmark, Moon} from "lucide-react";
+import cls from './Header.module.scss';
+import {Bookmark, Minimize, Moon, Search} from "lucide-react";
 
 
 const Header = () => {
     return (
-        <div className={styles.header}>
-            <div className={styles.headerInner}>
+        <div className={cls.header}>
+            <div className={cls.headerInner}>
 
-                <div className={styles.left}>
-                    <Link to="/" className={styles.logo}>Nihonji</Link>
-                </div>
-
-                <div className={styles.center}>
-                    <input type="text" className={styles.search} placeholder="Поиск..." />
-                </div>
-
-                <div className={styles.right}>
-                    <div className={styles.links}>
-                        <Link to="/novelty" className={styles.navLink}>Онгоинги</Link>
-                        <Link to="/popular" className={styles.navLink}>Популярное</Link>
-                        <Link to="/catalog" className={styles.navLink}>Каталог</Link>
+                <div>
+                    <div className={cls.left}>
+                        <Link to="/" className={cls.logo}>Nihonji</Link>
                     </div>
-                    <div className={styles.toggles}>
-                        <Link to="/catalog" className={styles.toggleTheme}><Bookmark /></Link>
-                        <button className={styles.toggleLang}>RU</button>
-                        <button className={styles.toggleTheme}>
+                </div>
+                <div className={cls.right}>
+                    <div className={cls.links}>
+                        <Link to="/novelty" className={cls.navLink}>Онгоинги</Link>
+                        <Link to="/popular" className={cls.navLink}>Популярное</Link>
+                        <Link to="/catalog" className={cls.navLink}>Каталог</Link>
+                        <Link to="/catalog" className={cls.toggleTheme}><Search /></Link>
+                    </div>
+                    <div className={cls.toggles}>
+                        <Link to="/catalog" className={cls.toggleTheme}><Bookmark /></Link>
+                        <button className={cls.toggleLang}>RU</button>
+                        <button className={cls.toggleTheme}>
                             <Moon />
                         </button>
                     </div>
+                    <div className={cls.userAvatar}>
+                        <Minimize />
+                    </div>
                 </div>
-
             </div>
         </div>
 
