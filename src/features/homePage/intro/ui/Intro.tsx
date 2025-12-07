@@ -1,11 +1,14 @@
 import cls from './Intro.module.scss';
-import {classNames} from "../../../../shared/lib/classNames/classNames.ts";
-import {Swiper, SwiperSlide} from "swiper/react";
-import { Autoplay } from "swiper/modules";
+import { classNames } from "../../../../shared/lib/classNames/classNames.ts";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import bg1 from "../../../../shared/assets/img/homePage/bg-1.jpg";
 import bg2 from "../../../../shared/assets/img/homePage/bg-2.jpg";
 import bg3 from "../../../../shared/assets/img/homePage/bg-3.jpg";
 import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { useRef, useState, useEffect } from "react";
 
 interface IntroProps {
     className?: string;
@@ -13,25 +16,60 @@ interface IntroProps {
 
 const bgImages = [bg2, bg1, bg3];
 
-export const Intro = ({className}: IntroProps) => {
+export const Intro = ({ className }: IntroProps) => {
+    const prevRef = useRef<HTMLButtonElement>(null);
+    const nextRef = useRef<HTMLButtonElement>(null);
+    const paginationRef = useRef<HTMLDivElement>(null);
+    const [swiperReady, setSwiperReady] = useState(false);
+
+    useEffect(() => {
+        if (prevRef.current && nextRef.current && paginationRef.current) {
+            setSwiperReady(true);
+        }
+    }, []);
+
     return (
         <section className={classNames(cls.Intro, {}, [className])}>
-            <Swiper
-                modules={[Autoplay]}
-                className={cls.bgSwiper}
-                loop
-                autoplay={{delay: 5000}}
-                speed={800}
-            >
-                {bgImages.map((bgImage, i) => (
-                    <SwiperSlide key={i}>
-                        <div
-                            className={cls.bgSlide}
-                            style={{ backgroundImage: `url(${bgImage})`}}
-                        />
-                    </SwiperSlide>
-                ))}
-            </Swiper>
+            <button ref={prevRef} className={classNames(cls.navBtn, {}, [cls.prevBtn])}></button>
+            <button ref={nextRef} className={classNames(cls.navBtn, {}, [cls.nextBtn])}></button>
+
+            {swiperReady && (
+                <Swiper
+                    modules={[Autoplay, Navigation, Pagination]}
+                    className={cls.bgSwiper}
+                    loop
+                    autoplay={{ delay: 5000 }}
+                    speed={800}
+                    navigation={{
+                        prevEl: prevRef.current,
+                        nextEl: nextRef.current,
+                    }}
+                    pagination={{
+                        el: paginationRef.current,
+                        clickable: true,
+                        type: "bullets",
+                    }}
+                    onBeforeInit={(swiper) => {
+                        if (prevRef.current && nextRef.current) {
+                            swiper.params.navigation.prevEl = prevRef.current;
+                            swiper.params.navigation.nextEl = nextRef.current;
+                        }
+                    }}
+                    onInit={(swiper) => {
+                        swiper.navigation.update();
+                        swiper.pagination.update();
+                    }}
+                >
+                    {bgImages.map((bgImage, i) => (
+                        <SwiperSlide key={i}>
+                            <div
+                                className={cls.bgSlide}
+                                style={{ backgroundImage: `url(${bgImage})` }}
+                            />
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            )}
 
             <div className={cls.introMask}></div>
 
@@ -45,9 +83,10 @@ export const Intro = ({className}: IntroProps) => {
                         Личный гид по аниме: находи тайтлы по настроению, жанру, рейтингу и рекомендациям.
                         Каждый день — что-то новое.
                     </p>
+
+                    <div ref={paginationRef} className={cls.introPagination}></div>
                 </div>
             </div>
         </section>
     );
 };
-

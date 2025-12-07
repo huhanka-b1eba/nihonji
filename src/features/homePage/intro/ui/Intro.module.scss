@@ -14,9 +14,9 @@
     z-index: 10;
 
     background: linear-gradient(
-                    to top,
+                    to top right,
                     rgba(0,0,0,0.7),
-                    rgba(0,0,0,0.25)
+                    rgba(0,0,0,0)
     ),
     radial-gradient(
                     circle at center,
@@ -80,5 +80,99 @@
     height: 100%;
     background-size: cover;
     background-position: center;
+}
+
+
+.navBtn {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+    width: 48px;
+    height: 48px;
+    z-index: 30;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .2s linear;
+}
+
+
+.prevBtn { left: 10px; }
+
+.nextBtn { right: 10px; }
+
+.prevBtn::before,
+.nextBtn::before {
+    content: "";
+    display: block;
+    width: 14px;
+    height: 14px;
+    border-top: 5px solid #fff;
+    border-right: 5px solid #fff;
+    margin: 0 auto;
+    transition: all .2s linear;
+}
+
+.prevBtn::before {
+    transform: rotate(-135deg);
+}
+
+.nextBtn::before {
+    transform: rotate(45deg);
+}
+
+.navBtn:hover {
+    opacity: .8;
+}
+
+.introPagination {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 100px;
+
+    :global(.swiper-pagination-bullet) {
+        width: 50px;
+        height: 14px;
+        background: #fff;
+        border-radius: 15px;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        transition: 0.3s ease;
+
+        &:hover {
+            background: rgba(255,255,255,0.7);
+        }
+    }
+
+
+    :global(.swiper-pagination-bullet-active) {
+        background: rgba(255,255,255,0.5);
+        width: 100px;
+
+        &::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: #fff;
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: slide-progress 5s linear forwards;
+        }
+    }
+}
+
+@keyframes slide-progress {
+    from {
+        transform: scaleX(0);
+    }
+    to {
+        transform: scaleX(1);
+    }
 }
 
