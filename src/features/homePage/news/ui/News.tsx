@@ -117,7 +117,6 @@ export const News = ({className}: NewsProps) => {
                         ))}
                     </div>
 
-                    {/* Правая колонка — маленькие */}
                     <div className={cls.smallColumn}>
                         {mockNews.slice(6, 10).map((item) => (
                             <div className={cls.smallItem} key={item.title}>

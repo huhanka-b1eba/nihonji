@@ -111,6 +111,7 @@
   align-items: center;
   gap: 12px;
   cursor: pointer;
+  transition: all .2s linear;
 
   img {
     width: 200px;
@@ -118,6 +119,10 @@
     border-radius: 6px;
     object-fit: cover;
     transition: filter .2s ease;
+  }
+
+  &:hover {
+    transform: translateY(-5px);
   }
 
   &:hover img {

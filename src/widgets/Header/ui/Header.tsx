@@ -11,16 +11,16 @@ const Header = () => {
                 <div>
                     <div className={cls.left}>
                         <Link to="/" className={cls.logo}>Nihonji</Link>
+                        <div className={cls.links}>
+                            <Link to="/novelty" className={cls.navLink}>Онгоинги</Link>
+                            <Link to="/popular" className={cls.navLink}>Популярное</Link>
+                            <Link to="/catalog" className={cls.navLink}>Каталог</Link>
+                        </div>
                     </div>
                 </div>
                 <div className={cls.right}>
-                    <div className={cls.links}>
-                        <Link to="/novelty" className={cls.navLink}>Онгоинги</Link>
-                        <Link to="/popular" className={cls.navLink}>Популярное</Link>
-                        <Link to="/catalog" className={cls.navLink}>Каталог</Link>
-                        <Link to="/catalog" className={cls.toggleTheme}><Search /></Link>
-                    </div>
                     <div className={cls.toggles}>
+                        <Link to="/catalog" className={cls.toggleTheme}><Search /></Link>
                         <Link to="/catalog" className={cls.toggleTheme}><Bookmark /></Link>
                         <button className={cls.toggleLang}>RU</button>
                         <button className={cls.toggleTheme}>
