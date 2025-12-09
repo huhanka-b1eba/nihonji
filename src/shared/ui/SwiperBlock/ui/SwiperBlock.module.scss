@@ -12,57 +12,54 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all .2s linear;
+  overflow: visible; /* разрешаем тени расширяться визуально */
 }
 
-.hidden {
-  opacity: 0;
+.navBtn::after {
+  content: "";
+  position: absolute;
+  inset: 0; /* занимает только зону кнопки */
+  z-index: -1;
   pointer-events: none;
-  transform: translateX(-10px); /* небольшая анимация скрытия */
+  opacity: 0.6;
+  transition: opacity .2s;
+
+  /* создаём тень, которая визуально "уходит" наружу */
+  filter: blur(40px);
 }
 
+/* направленные градиенты */
+.prevBtn::after {
+  background: linear-gradient(to right, rgba(0,0,0,0.6), rgba(0,0,0,0));
+}
 
+.nextBtn::after {
+  background: linear-gradient(to left, rgba(0,0,0,0.6), rgba(0,0,0,0));
+}
 
-.prevBtn { left: 10px; }
-
-.nextBtn { right: 10px; }
+.navBtn:hover::after {
+  opacity: 0.9;
+}
 
 .prevBtn::before,
 .nextBtn::before {
   content: "";
   display: block;
-  width: 12px;
-  height: 12px;
-  border-top: 2px solid #fff;
-  border-right: 2px solid #fff;
-  margin: 0 auto;
+  width: 14px;
+  height: 14px;
+  border-top: 3px solid #fff;
+  border-right: 3px solid #fff;
   transition: all .2s linear;
 }
 
-.prevBtn::before {
-  transform: rotate(-135deg);
-}
+.prevBtn::before { transform: rotate(-135deg); }
+.nextBtn::before { transform: rotate(45deg); }
 
-.nextBtn::before {
-  transform: rotate(45deg);
-}
-
-.navBtn:hover::after {
-  content: "";
-  position: absolute;
-  top: -100vh;
-  bottom: -100vh;
-  left: -200px;
-  right: -200px;
-  z-index: -1;
+.hidden {
+  opacity: 0;
   pointer-events: none;
-  background: linear-gradient(
-                  to right,
-                  rgba(0,0,0,0.45),
-                  rgba(0,0,0,0)
-  );
-  transition: opacity .2s;
+  transform: translateX(-10px);
 }
 
-.prevBtn:hover::after { background: linear-gradient(to right, rgba(0,0,0,0.45), rgba(0,0,0,0)); }
-.nextBtn:hover::after { background: linear-gradient(to left, rgba(0,0,0,0.45), rgba(0,0,0,0)); }
+.prevBtn { left: 10px; }
+.nextBtn { right: 10px; }
