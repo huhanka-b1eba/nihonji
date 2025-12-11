@@ -1,48 +1,77 @@
-import {jikanApi} from "../../../shared/api/jikanApi.ts";
+import { jikanApi } from "../../../shared/api/jikanApi";
 import type {
     Anime,
     AnimeCharacter,
     AnimePicture,
     AnimeRecommendation,
-    AnimeRecommendation,
-    AnimeStaff
-} from "../model/anime.ts";
+    AnimeStaff,
+} from "../model/anime";
 
+export interface GetAnimeArgs {
+    type?: string;
+    score?: number;
+    min_score?: number;
+    status?: string;
+    rating?: string;
+    sfw?: boolean;
+    order_by?: string;
+    sort?: string;
+    letter?: string;
+    start_date?: string;
+    end_date?: string;
+    page?: number;
+    limit?: number;
+}
 
 export const animeApi = jikanApi.injectEndpoints({
     endpoints: (build) => ({
-        getPopularAnime: build.query<Anime[], void>({
-            query: () => `/anime?order_by=popularity`,
-            transformResponse: (resp: any) => resp.data
+        getAnime: build.query<Anime[], GetAnimeArgs | void>({
+            query: (args) => {
+                const params: Record<string, any> = {};
+                if (!args) {
+                    params.order_by = "popularity";
+                } else {
+                    Object.entries(args).forEach(([k, v]) => {
+                        if (v !== undefined && v !== null && v !== "") params[k] = v;
+                    });
+                }
+                return {
+                    url: "/anime",
+                    params,
+                };
+            },
+            transformResponse: (resp: any) => resp?.data ?? resp,
         }),
+
         getAnimeById: build.query<Anime, string>({
-            query: (id : string) => `/anime/${id}/full`,
-            transformResponse: (resp: any) => resp.data
+            query: (id: string) => `/anime/${id}/full`,
+            transformResponse: (resp: any) => resp?.data ?? resp,
         }),
-        getAnimePicture: build.query<AnimePicture, string>({
-            query: (id : string) => `/anime/${id}/pictures`,
-            transformResponse: (resp: any) => resp.data
+
+        getAnimePicture: build.query<AnimePicture[], string>({
+            query: (id: string) => `/anime/${id}/pictures`,
+            transformResponse: (resp: any) => resp?.data ?? resp,
         }),
-        getAnimeCharacters: build.query<AnimeCharacter, string>({
-            query: (id : string) => `/anime/${id}/characters`,
-            transformResponse: (resp: any) => resp.data
+        getAnimeCharacters: build.query<AnimeCharacter[], string>({
+            query: (id: string) => `/anime/${id}/characters`,
+            transformResponse: (resp: any) => resp?.data ?? resp,
         }),
-        getAnimeRecommendations: build.query<AnimeRecommendation, string>({
-            query: (id : string) => `/anime/${id}/recommendations`,
-            transformResponse: (resp: any) => resp.data
+        getAnimeRecommendations: build.query<AnimeRecommendation[], string>({
+            query: (id: string) => `/anime/${id}/recommendations`,
+            transformResponse: (resp: any) => resp?.data ?? resp,
         }),
-        getAnimeStaff: build.query<AnimeStaff, string>({
-            query: (id : string) => `/anime/${id}/staff`,
-            transformResponse: (resp: any) => resp.data
-        })
-    })
+        getAnimeStaff: build.query<AnimeStaff[], string>({
+            query: (id: string) => `/anime/${id}/staff`,
+            transformResponse: (resp: any) => resp?.data ?? resp,
+        }),
+    }),
 });
 
 export const {
-    useGetPopularAnimeQuery,
+    useGetAnimeQuery,
     useGetAnimeByIdQuery,
     useGetAnimePictureQuery,
     useGetAnimeCharactersQuery,
-    useGetAnimeRecommendationsQuery ,
-    useGetAnimeStaffQuery
+    useGetAnimeRecommendationsQuery,
+    useGetAnimeStaffQuery,
 } = animeApi;
