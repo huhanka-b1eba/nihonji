@@ -3,7 +3,7 @@ import {HomePage} from "../../../pages/HomePage";
 import {CatalogPage} from "../../../pages/CatalogPage";
 import { AppRoutes, routePaths } from "./routes.ts";
 import {NoveltyPage} from "../../../pages/NoveltyPage";
-import {Popular} from "../../../pages/PopularPage";
+import {PopularPage} from "../../../pages/PopularPage";
 import {AnimeDetailPage} from "../../../pages/AnimeDetailPage";
 
 
@@ -22,7 +22,7 @@ export const routeConfig: Record<AppRoutes, RouteProps> = {
     },
     [AppRoutes.POPULAR]: {
         path: routePaths[AppRoutes.POPULAR],
-        element: <Popular />
+        element: <PopularPage />
     },
     [AppRoutes.ANIME_DETAIL_PAGE]: {
         path: routePaths[AppRoutes.ANIME_DETAIL_PAGE],

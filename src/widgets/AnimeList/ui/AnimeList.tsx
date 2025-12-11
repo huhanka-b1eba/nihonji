@@ -1,5 +1,5 @@
 import React from "react";
-import cls from "./OngoingList.module.scss";
+import cls from "./AnimeList.module.scss";
 import { AnimeCard } from "../../../entities/anime";
 import type { Anime } from "../../../entities/anime/model/anime";
 import {Link} from "react-router";
@@ -8,7 +8,7 @@ type Props = {
     items: Anime[];
 };
 
-export const OngoingList: React.FC<Props> = ({ items }) => {
+export const AnimeList: React.FC<Props> = ({ items }) => {
     if (!items || items.length === 0) return <div className={cls.empty}>Нет данных.</div>;
 
     return (

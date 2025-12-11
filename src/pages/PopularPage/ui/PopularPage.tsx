@@ -1,5 +1,6 @@
+// src/pages/PopularPage/PopularPage.tsx
 import React, { useEffect, useRef, useState } from "react";
-import cls from "./NoveltyPage.module.scss";
+import cls from "./PopularPage.module.scss";
 import { classNames } from "../../../shared/lib/classNames/classNames";
 import { AnimeList } from "../../../widgets/AnimeList";
 import { ListHeader } from "../../../shared/ui/ListHeader";
@@ -7,16 +8,16 @@ import { useGetAnimeQuery } from "../../../entities/anime/api/animeApi";
 import { Loader } from "../../../shared/ui/Loader";
 import type { Anime } from "../../../entities/anime/model/anime";
 
-interface NoveltyPageProps {
+interface PopularPageProps {
     className?: string;
 }
 
 const PAGE_LIMIT = 24;
 
-export const NoveltyPage: React.FC<NoveltyPageProps> = ({ className }) => {
+export const PopularPage: React.FC<PopularPageProps> = ({ className }) => {
     const [page, setPage] = useState(1);
     const [allItems, setAllItems] = useState<Anime[]>([]);
-    const [sortBool, setSortBool] = useState("asc");
+    const [sortBool, setSortBool] = useState<"asc" | "desc">("asc");
     const sentinelRef = useRef<HTMLDivElement | null>(null);
     const observerRef = useRef<IntersectionObserver | null>(null);
 
@@ -27,7 +28,7 @@ export const NoveltyPage: React.FC<NoveltyPageProps> = ({ className }) => {
         isFetching,
     } = useGetAnimeQuery(
         {
-            status: "airing",
+            // популярное по умолчанию, без ограничения по статусу
             order_by: "popularity",
             sort: sortBool,
             sfw: true,
@@ -37,45 +38,42 @@ export const NoveltyPage: React.FC<NoveltyPageProps> = ({ className }) => {
         { refetchOnMountOrArgChange: false }
     );
 
+    // сбрасываем список при смене сортировки
     useEffect(() => {
         setPage(1);
         setAllItems([]);
     }, [sortBool]);
 
+    // фильтрация и агрегация страниц
     useEffect(() => {
-        if (!rawData || !Array.isArray(rawData)) {
-            return;
-        }
+        if (!rawData || !Array.isArray(rawData)) return;
 
         const isKids = (a: any) => {
             const raw = (a?.rating ?? "").toString().trim();
-            if (!raw) return false;
+            if (!raw) return false; // unknown — считать не детским
 
             const r = raw.toUpperCase();
 
             if (/^G(\s|-|$)/.test(r)) return true;
-
             if (/^PG(\s|-)/.test(r) && !/^PG-13/.test(r)) return true;
-
             return false;
         };
 
         setAllItems((prev) => {
-            const pageItems = (rawData as Anime[]).filter(a => !isKids(a));
+            const pageItems = (rawData as Anime[]).filter((a) => !isKids(a));
 
             if (page === 1) return pageItems;
 
-            const existingIds = new Set(prev.map((a) => String(a.mal_id ?? a.title)));
-            const toAdd = pageItems.filter((a) => !existingIds.has(String(a.mal_id ?? a.title)));
+            const existingIds = new Set(prev.map((a) => String(a.mal_id ?? a.id ?? a.title)));
+            const toAdd = pageItems.filter((a) => !existingIds.has(String(a.mal_id ?? a.id ?? a.title)));
             return prev.concat(toAdd);
         });
     }, [rawData, page]);
 
-    console.log(rawData)
-
     const lastFetchedCount = Array.isArray(rawData) ? rawData.length : 0;
     const hasMore = lastFetchedCount === PAGE_LIMIT;
 
+    // IntersectionObserver -> подгружаем следующую страницу
     useEffect(() => {
         if (observerRef.current) {
             observerRef.current.disconnect();
@@ -117,11 +115,14 @@ export const NoveltyPage: React.FC<NoveltyPageProps> = ({ className }) => {
     };
 
     return (
-        <div className={classNames(cls.NoveltyPage, {}, [className])}>
+        <div className={classNames(cls.Popular, {}, [className])}>
             <div className="container">
-                <ListHeader title="Онгоинги" sortName={
-                    sortBool === "asc" ? "Сначала старые" : "Сначала новые"
-                } sortBool={sortBool} setSortBool={setSortBool}/>
+                <ListHeader
+                    title="Популярное"
+                    sortName={sortBool === "desc" ? "Сначала популярное" : "Сначала менее популярное"}
+                    sortBool={sortBool}
+                    setSortBool={setSortBool}
+                />
 
                 {isLoading && (
                     <div className={cls.center}>
@@ -130,7 +131,7 @@ export const NoveltyPage: React.FC<NoveltyPageProps> = ({ className }) => {
                 )}
 
                 {error && allItems.length === 0 && (
-                    <div className={cls.error}>Не удалось загрузить онгоинги. Попробуйте позже.</div>
+                    <div className={cls.error}>Не удалось загрузить популярное. Попробуйте позже.</div>
                 )}
 
                 {allItems.length > 0 && <AnimeList items={allItems} />}
@@ -159,3 +160,5 @@ export const NoveltyPage: React.FC<NoveltyPageProps> = ({ className }) => {
         </div>
     );
 };
+
+export default PopularPage;
