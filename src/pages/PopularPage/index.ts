@@ -1,7 +1,7 @@
 import {
-    Popular
-} from "./ui/Popular.tsx";
+    PopularPage
+} from "./ui/PopularPage.tsx";
 
 export {
-    Popular
+    PopularPage
 }

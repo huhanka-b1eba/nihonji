@@ -10,6 +10,10 @@ body {
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+}
+
 .container {
   max-width: 1730px;
   margin: 0 auto;
@@ -21,6 +25,8 @@ a,
 input,
 textarea,
 select {
+  background: transparent;
+  border: none;
   outline: none;
   transition: all 0.3s ease;
 }

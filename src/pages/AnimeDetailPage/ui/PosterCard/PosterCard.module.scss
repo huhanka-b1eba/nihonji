@@ -1,0 +1,157 @@
+.posterCard {
+    width: 240px;
+    margin-top: -120px;
+    margin-bottom: 20px;
+    z-index: 6;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.poster {
+    width: 240px;
+    height: 340px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.06);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.6);
+}
+
+.placeholder {
+    width: 240px;
+    height: 340px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.03);
+    border-radius: 6px;
+    color: rgba(255,255,255,0.7);
+}
+
+.actions {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.like {
+    background: #ff6b8a;
+    color: #fff;
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* src/pages/AnimeDetailPage/PosterCard/PosterCard.module.scss */
+.posterCard {
+    width: 240px;
+    margin-top: -120px;
+    margin-bottom: 20px;
+    z-index: 6;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.poster {
+    width: 240px;
+    height: 340px;
+    object-fit: cover;
+    border-radius: 3px;
+    border: 1px solid rgba(255,255,255,0.06);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.6);
+    display: block;
+}
+
+.placeholder {
+    width: 240px;
+    height: 340px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: rgba(255,255,255,0.02);
+    border-radius: 3px;
+    color: rgba(255,255,255,0.6);
+}
+
+/* actions row */
+.actions {
+    width: 100%;
+    display:flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 4px;
+}
+.like {
+    background: #ff6b8a;
+    color: #fff;
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* zoom helpers (те же, что использовали в странице) */
+.zoomContainer {
+    position: relative;
+    display: inline-block;
+    cursor: zoom-in;
+    overflow: visible;
+}
+
+.zoomUpper {
+    position: relative;
+    display: inline-block;
+    overflow: visible;
+    will-change: transform;
+    transition: transform 420ms cubic-bezier(.2,.9,.2,1), box-shadow 320ms ease;
+    z-index: 60;
+}
+
+.zoomUpper::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -8px;
+    transform: translate(-50%, 0);
+    width: 72%;
+    height: 40px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0.38) 0%, rgba(0,0,0,0.18) 40%, rgba(0,0,0,0) 70%);
+    filter: blur(14px);
+    opacity: 0.95;
+    transition: transform 420ms cubic-bezier(.2,.9,.2,1), opacity 300ms ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.zoomOverlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    opacity: 0;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 42px;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    border-radius: 6px;
+    z-index: 5;
+}
+
+.zoomContainer:hover .zoomOverlay {
+    opacity: 1;
+}

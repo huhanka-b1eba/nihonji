@@ -1,10 +1,10 @@
+import cls from "./Loader.module.scss";
 
 
 const Loader = () => {
     return (
-        <>
-            Загрузка...
-        </>
+        <div className={cls.loader}>
+        </div>
     )
 }
 

@@ -13,23 +13,31 @@
     inset: 0;
     z-index: 10;
 
-    background: linear-gradient(
-                    to top right,
-                    rgba(0,0,0,0.7),
-                    rgba(0,0,0,0)
-    ),
-    radial-gradient(
-                    circle at center,
-                    rgba(0,0,0,0) 0%,
-                    rgba(0,0,0,0.5) 100%
-    );
+    background:
+            linear-gradient(
+                            to right,
+                            rgba(0,0,0,0.4),
+                            rgba(0,0,0,0)
+            ),
+                /* затемнение сверху → вниз */
+            linear-gradient(
+                            to top,
+                            rgba(0,0,0,1),
+                            rgba(0,0,0,0)
+            ),
+                /* твой радиальный градиент */
+            radial-gradient(
+                            circle at center,
+                            rgba(0,0,0,0) 0%,
+                            rgba(0,0,0,0.5) 100%
+            );
 
-    backdrop-filter: blur(2px);
 }
+
 
 .introContent {
     position: relative;
-    z-index: 20;
+    z-index: 22;
     max-width: 700px;
 }
 

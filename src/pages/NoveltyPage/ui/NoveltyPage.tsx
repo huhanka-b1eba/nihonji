@@ -1,89 +1,161 @@
-import cls from './NoveltyPage.module.scss';
-import {classNames} from "../../../shared/lib/classNames/classNames.ts";
-import {OngoingList} from "../../../widgets/OngoingList";
-import {ListHeader} from "../../../shared/ui/ListHeader";
+import React, { useEffect, useRef, useState } from "react";
+import cls from "./NoveltyPage.module.scss";
+import { classNames } from "../../../shared/lib/classNames/classNames";
+import { AnimeList } from "../../../widgets/AnimeList";
+import { ListHeader } from "../../../shared/ui/ListHeader";
+import { useGetAnimeQuery } from "../../../entities/anime/api/animeApi";
+import { Loader } from "../../../shared/ui/Loader";
+import type { Anime } from "../../../entities/anime/model/anime";
 
 interface NoveltyPageProps {
     className?: string;
 }
 
+const PAGE_LIMIT = 24;
 
-export interface OngoingAnime {
-    id: string;
-    title: string;
-    image: string;
-    episodesReleased: number;
-    dayOfWeek: string;
-    rating: number;
-}
+export const NoveltyPage: React.FC<NoveltyPageProps> = ({ className }) => {
+    const [page, setPage] = useState(1);
+    const [allItems, setAllItems] = useState<Anime[]>([]);
+    const [sortBool, setSortBool] = useState("asc");
+    const sentinelRef = useRef<HTMLDivElement | null>(null);
+    const observerRef = useRef<IntersectionObserver | null>(null);
 
-export const ongoingsMock: OngoingAnime[] = [
-    {
-        id: "1",
-        title: "Solo Leveling: Season 2",
-        image: "https://cdn.myanimelist.net/images/anime/1700/144702.jpg",
-        episodesReleased: 7,
-        dayOfWeek: "Пятница",
-        rating: 8.9,
-    },
-    {
-        id: "2",
-        title: "Bleach: Thousand-Year Blood War Part 3",
-        image: "https://cdn.myanimelist.net/images/anime/1763/140021.jpg",
-        episodesReleased: 4,
-        dayOfWeek: "Воскресенье",
-        rating: 9.1,
-    },
-    {
-        id: "3",
-        title: "Blue Lock Season 2",
-        image: "https://cdn.myanimelist.net/images/anime/1384/144532.jpg",
-        episodesReleased: 10,
-        dayOfWeek: "Суббота",
-        rating: 8.2,
-    },
-    {
-        id: "4",
-        title: "Mushoku Tensei II Part 2",
-        image: "https://cdn.myanimelist.net/images/anime/1993/143627.jpg",
-        episodesReleased: 6,
-        dayOfWeek: "Понедельник",
-        rating: 8.5,
-    },
-    {
-        id: "4",
-        title: "Mushoku Tensei II Part 2",
-        image: "https://cdn.myanimelist.net/images/anime/1993/143627.jpg",
-        episodesReleased: 6,
-        dayOfWeek: "Понедельник",
-        rating: 8.5,
-    },
-    {
-        id: "4",
-        title: "Mushoku Tensei II Part 2",
-        image: "https://cdn.myanimelist.net/images/anime/1993/143627.jpg",
-        episodesReleased: 6,
-        dayOfWeek: "Понедельник",
-        rating: 8.5,
-    },
-    {
-        id: "4",
-        title: "Mushoku Tensei II Part 2",
-        image: "https://cdn.myanimelist.net/images/anime/1993/143627.jpg",
-        episodesReleased: 6,
-        dayOfWeek: "Понедельник",
-        rating: 8.5,
-    }
-];
+    const {
+        data: rawData,
+        error,
+        isLoading,
+        isFetching,
+    } = useGetAnimeQuery(
+        {
+            status: "airing",
+            order_by: "popularity",
+            sort: sortBool,
+            sfw: true,
+            page,
+            limit: PAGE_LIMIT,
+        },
+        { refetchOnMountOrArgChange: false }
+    );
 
-export const NoveltyPage = ({className}: NoveltyPageProps) => {
+    useEffect(() => {
+        setPage(1);
+        setAllItems([]);
+    }, [sortBool]);
+
+    useEffect(() => {
+        if (!rawData || !Array.isArray(rawData)) {
+            return;
+        }
+
+        const isKids = (a: any) => {
+            const raw = (a?.rating ?? "").toString().trim();
+            if (!raw) return false;
+
+            const r = raw.toUpperCase();
+
+            if (/^G(\s|-|$)/.test(r)) return true;
+
+            if (/^PG(\s|-)/.test(r) && !/^PG-13/.test(r)) return true;
+
+            return false;
+        };
+
+        setAllItems((prev) => {
+            const pageItems = (rawData as Anime[]).filter(a => !isKids(a));
+
+            if (page === 1) return pageItems;
+
+            const existingIds = new Set(prev.map((a) => String(a.mal_id ?? a.title)));
+            const toAdd = pageItems.filter((a) => !existingIds.has(String(a.mal_id ?? a.title)));
+            return prev.concat(toAdd);
+        });
+    }, [rawData, page]);
+
+    console.log(rawData)
+
+    const lastFetchedCount = Array.isArray(rawData) ? rawData.length : 0;
+    const hasMore = lastFetchedCount === PAGE_LIMIT;
+
+    useEffect(() => {
+        if (observerRef.current) {
+            observerRef.current.disconnect();
+            observerRef.current = null;
+        }
+
+        const sentinel = sentinelRef.current;
+        if (!sentinel) return;
+
+        const io = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        if (!isFetching && !isLoading && hasMore) {
+                            setPage((p) => p + 1);
+                        }
+                    }
+                });
+            },
+            {
+                root: null,
+                rootMargin: "200px",
+                threshold: 0.1,
+            }
+        );
+
+        io.observe(sentinel);
+        observerRef.current = io;
+
+        return () => {
+            io.disconnect();
+            if (observerRef.current) observerRef.current.disconnect();
+            observerRef.current = null;
+        };
+    }, [isFetching, isLoading, hasMore]);
+
+    const handleLoadMore = () => {
+        if (!isFetching && hasMore) setPage((p) => p + 1);
+    };
+
     return (
         <div className={classNames(cls.NoveltyPage, {}, [className])}>
             <div className="container">
-                <ListHeader title="Онгоинги" sortName="Сначала новые"/>
-                <OngoingList items={ongoingsMock}/>
+                <ListHeader title="Онгоинги" sortName={
+                    sortBool === "asc" ? "Сначала старые" : "Сначала новые"
+                } sortBool={sortBool} setSortBool={setSortBool}/>
+
+                {isLoading && (
+                    <div className={cls.center}>
+                        <Loader />
+                    </div>
+                )}
+
+                {error && allItems.length === 0 && (
+                    <div className={cls.error}>Не удалось загрузить онгоинги. Попробуйте позже.</div>
+                )}
+
+                {allItems.length > 0 && <AnimeList items={allItems} />}
+
+                {(isFetching || isLoading) && allItems.length > 0 && (
+                    <div className={cls.fetching}>
+                        <Loader />
+                        <span className={cls.fetchingText}>Загрузка...</span>
+                    </div>
+                )}
+
+                <div ref={sentinelRef} style={{ height: 1, width: "100%" }} />
+
+                {!isLoading && allItems.length > 0 && hasMore && (
+                    <div className={cls.loadMoreWrap}>
+                        <button className={cls.loadMoreBtn} onClick={handleLoadMore} disabled={isFetching}>
+                            {isFetching ? "Загружаем..." : "Загрузить ещё"}
+                        </button>
+                    </div>
+                )}
+
+                {!isLoading && !hasMore && allItems.length > 0 && (
+                    <div className={cls.endMessage}>Показаны все доступные результаты.</div>
+                )}
             </div>
         </div>
     );
 };
-

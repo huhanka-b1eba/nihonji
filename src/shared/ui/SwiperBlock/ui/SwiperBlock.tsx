@@ -31,6 +31,7 @@ export const SwiperBlock = ({children, className}: SwiperBlockProps) => {
                 }}
                 initialSlide={0}
                 spaceBetween={20}
+                slidesOffsetBefore={isBeginning ? 85 : 0}
                 onSwiper={(s) => (swiperRef.current = s)}
                 onSlideChange={(s) => {
                     setIsBeginning(!!s.isBeginning);

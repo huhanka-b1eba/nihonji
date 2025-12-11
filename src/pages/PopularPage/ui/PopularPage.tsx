@@ -1,0 +1,164 @@
+// src/pages/PopularPage/PopularPage.tsx
+import React, { useEffect, useRef, useState } from "react";
+import cls from "./PopularPage.module.scss";
+import { classNames } from "../../../shared/lib/classNames/classNames";
+import { AnimeList } from "../../../widgets/AnimeList";
+import { ListHeader } from "../../../shared/ui/ListHeader";
+import { useGetAnimeQuery } from "../../../entities/anime/api/animeApi";
+import { Loader } from "../../../shared/ui/Loader";
+import type { Anime } from "../../../entities/anime/model/anime";
+
+interface PopularPageProps {
+    className?: string;
+}
+
+const PAGE_LIMIT = 24;
+
+export const PopularPage: React.FC<PopularPageProps> = ({ className }) => {
+    const [page, setPage] = useState(1);
+    const [allItems, setAllItems] = useState<Anime[]>([]);
+    const [sortBool, setSortBool] = useState<"asc" | "desc">("asc");
+    const sentinelRef = useRef<HTMLDivElement | null>(null);
+    const observerRef = useRef<IntersectionObserver | null>(null);
+
+    const {
+        data: rawData,
+        error,
+        isLoading,
+        isFetching,
+    } = useGetAnimeQuery(
+        {
+            // популярное по умолчанию, без ограничения по статусу
+            order_by: "popularity",
+            sort: sortBool,
+            sfw: true,
+            page,
+            limit: PAGE_LIMIT,
+        },
+        { refetchOnMountOrArgChange: false }
+    );
+
+    // сбрасываем список при смене сортировки
+    useEffect(() => {
+        setPage(1);
+        setAllItems([]);
+    }, [sortBool]);
+
+    // фильтрация и агрегация страниц
+    useEffect(() => {
+        if (!rawData || !Array.isArray(rawData)) return;
+
+        const isKids = (a: any) => {
+            const raw = (a?.rating ?? "").toString().trim();
+            if (!raw) return false; // unknown — считать не детским
+
+            const r = raw.toUpperCase();
+
+            if (/^G(\s|-|$)/.test(r)) return true;
+            if (/^PG(\s|-)/.test(r) && !/^PG-13/.test(r)) return true;
+            return false;
+        };
+
+        setAllItems((prev) => {
+            const pageItems = (rawData as Anime[]).filter((a) => !isKids(a));
+
+            if (page === 1) return pageItems;
+
+            const existingIds = new Set(prev.map((a) => String(a.mal_id ?? a.id ?? a.title)));
+            const toAdd = pageItems.filter((a) => !existingIds.has(String(a.mal_id ?? a.id ?? a.title)));
+            return prev.concat(toAdd);
+        });
+    }, [rawData, page]);
+
+    const lastFetchedCount = Array.isArray(rawData) ? rawData.length : 0;
+    const hasMore = lastFetchedCount === PAGE_LIMIT;
+
+    // IntersectionObserver -> подгружаем следующую страницу
+    useEffect(() => {
+        if (observerRef.current) {
+            observerRef.current.disconnect();
+            observerRef.current = null;
+        }
+
+        const sentinel = sentinelRef.current;
+        if (!sentinel) return;
+
+        const io = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        if (!isFetching && !isLoading && hasMore) {
+                            setPage((p) => p + 1);
+                        }
+                    }
+                });
+            },
+            {
+                root: null,
+                rootMargin: "200px",
+                threshold: 0.1,
+            }
+        );
+
+        io.observe(sentinel);
+        observerRef.current = io;
+
+        return () => {
+            io.disconnect();
+            if (observerRef.current) observerRef.current.disconnect();
+            observerRef.current = null;
+        };
+    }, [isFetching, isLoading, hasMore]);
+
+    const handleLoadMore = () => {
+        if (!isFetching && hasMore) setPage((p) => p + 1);
+    };
+
+    return (
+        <div className={classNames(cls.Popular, {}, [className])}>
+            <div className="container">
+                <ListHeader
+                    title="Популярное"
+                    sortName={sortBool === "desc" ? "Сначала популярное" : "Сначала менее популярное"}
+                    sortBool={sortBool}
+                    setSortBool={setSortBool}
+                />
+
+                {isLoading && (
+                    <div className={cls.center}>
+                        <Loader />
+                    </div>
+                )}
+
+                {error && allItems.length === 0 && (
+                    <div className={cls.error}>Не удалось загрузить популярное. Попробуйте позже.</div>
+                )}
+
+                {allItems.length > 0 && <AnimeList items={allItems} />}
+
+                {(isFetching || isLoading) && allItems.length > 0 && (
+                    <div className={cls.fetching}>
+                        <Loader />
+                        <span className={cls.fetchingText}>Загрузка...</span>
+                    </div>
+                )}
+
+                <div ref={sentinelRef} style={{ height: 1, width: "100%" }} />
+
+                {!isLoading && allItems.length > 0 && hasMore && (
+                    <div className={cls.loadMoreWrap}>
+                        <button className={cls.loadMoreBtn} onClick={handleLoadMore} disabled={isFetching}>
+                            {isFetching ? "Загружаем..." : "Загрузить ещё"}
+                        </button>
+                    </div>
+                )}
+
+                {!isLoading && !hasMore && allItems.length > 0 && (
+                    <div className={cls.endMessage}>Показаны все доступные результаты.</div>
+                )}
+            </div>
+        </div>
+    );
+};
+
+export default PopularPage;

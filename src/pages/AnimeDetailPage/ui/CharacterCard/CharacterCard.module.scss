@@ -1,0 +1,37 @@
+.card {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.03);
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.thumb {
+  width: 80px;
+  height: 120px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.name {
+  font-weight: 700;
+}
+
+.role {
+  color: rgba(255,255,255,0.7);
+  font-size: 13px;
+}
+
+.va {
+  color: rgba(255,255,255,0.6);
+  font-size: 12px;
+}
