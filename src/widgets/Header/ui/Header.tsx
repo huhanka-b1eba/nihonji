@@ -20,7 +20,7 @@ const Header = () => {
                 </div>
                 <div className={cls.right}>
                     <div className={cls.toggles}>
-                        <Link to="/catalog" className={cls.toggleTheme}><Search /></Link>
+                        <Link to="/search" className={cls.toggleTheme}><Search /></Link>
                         <Link to="/catalog" className={cls.toggleTheme}><Bookmark /></Link>
                         <button className={cls.toggleLang}>RU</button>
                         <button className={cls.toggleTheme}>

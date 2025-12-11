@@ -1,0 +1,49 @@
+.CatalogPage {
+    padding: 100px 0 40px;
+}
+
+.title {
+    font-size: 32px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.filters {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.searchInput {
+    flex: 1;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.05);
+    color: #fff;
+}
+
+.select {
+    padding: 10px 14px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #fff;
+}
+
+.error {
+    color: #f55;
+    margin-top: 20px;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.endMessage {
+    text-align: center;
+    padding: 20px;
+    opacity: 0.7;
+}

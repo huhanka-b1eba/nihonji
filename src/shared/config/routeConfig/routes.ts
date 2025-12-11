@@ -4,7 +4,9 @@ export const AppRoutes  = {
     CATALOG: 'catalog',
     NOVELTY: 'novelty',
     POPULAR: 'popular',
-    ANIME_DETAIL_PAGE: 'anime-detail-page'
+    ANIME_DETAIL_PAGE: 'anime-detail-page',
+    SEARCH: 'search',
+    NEWS: 'news'
 } as const;
 
 export type AppRoutes = typeof AppRoutes[keyof typeof AppRoutes];
@@ -14,6 +16,8 @@ export const routePaths: Record<AppRoutes, string> = {
     [AppRoutes.CATALOG]: '/catalog',
     [AppRoutes.NOVELTY]: '/novelty',
     [AppRoutes.POPULAR]: '/popular',
-    [AppRoutes.ANIME_DETAIL_PAGE]: '/anime/:id'
+    [AppRoutes.ANIME_DETAIL_PAGE]: '/anime/:id',
+    [AppRoutes.SEARCH]: '/search',
+    [AppRoutes.NEWS]: '/news'
 }
 

@@ -5,6 +5,8 @@ import { AppRoutes, routePaths } from "./routes.ts";
 import {NoveltyPage} from "../../../pages/NoveltyPage";
 import {PopularPage} from "../../../pages/PopularPage";
 import {AnimeDetailPage} from "../../../pages/AnimeDetailPage";
+import {SearchPage} from "../../../pages/SearchPage";
+import {NewsPage} from "../../../pages/NewsPage/ui/NewsPage.tsx";
 
 
 export const routeConfig: Record<AppRoutes, RouteProps> = {
@@ -27,5 +29,13 @@ export const routeConfig: Record<AppRoutes, RouteProps> = {
     [AppRoutes.ANIME_DETAIL_PAGE]: {
         path: routePaths[AppRoutes.ANIME_DETAIL_PAGE],
         element: <AnimeDetailPage  />
+    },
+    [AppRoutes.SEARCH]: {
+        path: routePaths[AppRoutes.SEARCH],
+        element: <SearchPage  />
+    },
+    [AppRoutes.NEWS]: {
+        path: routePaths[AppRoutes.NEWS],
+        element: <NewsPage />
     }
 }

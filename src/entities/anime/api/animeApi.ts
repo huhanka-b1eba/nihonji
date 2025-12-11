@@ -21,6 +21,7 @@ export interface GetAnimeArgs {
     end_date?: string;
     page?: number;
     limit?: number;
+    q?: string;
 }
 
 export const animeApi = jikanApi.injectEndpoints({
@@ -72,6 +73,5 @@ export const {
     useGetAnimeByIdQuery,
     useGetAnimePictureQuery,
     useGetAnimeCharactersQuery,
-    useGetAnimeRecommendationsQuery,
     useGetAnimeStaffQuery,
 } = animeApi;
