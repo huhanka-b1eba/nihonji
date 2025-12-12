@@ -1,9 +1,48 @@
 import {Link} from "react-router";
 import cls from './Header.module.scss';
-import {Minimize, Moon, Search} from "lucide-react";
+import {LogOut, Minimize, Moon, Search, User} from "lucide-react";
+import {useAuth} from "app/providers/auth/AuthProvider.tsx";
+import {useEffect, useRef, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 
 const Header = () => {
+    const { user, logout } = useAuth();
+    const [open, setOpen] = useState(false);
+    const navigate = useNavigate();
+
+    const modalRef = useRef<HTMLDivElement>(null);
+    const avatarRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        function handleClickOutside(e: MouseEvent) {
+            const target = e.target as Node;
+
+            if (
+                open &&
+                modalRef.current &&
+                !modalRef.current.contains(target) &&
+                avatarRef.current &&
+                !avatarRef.current.contains(target)
+            ) {
+                setOpen(false);
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside)
+    }, [open]);
+
+    const handleNavigateToProfile = () => {
+        setOpen(false);
+        navigate('/profile');
+    }
+
+    const handleLogout = () => {
+        setOpen(false);
+        logout();
+    }
+
     return (
         <div className={cls.header}>
             <div className={cls.headerInner}>
@@ -26,9 +65,32 @@ const Header = () => {
                             <Moon />
                         </button>
                     </div>
-                    <div className={cls.userAvatar}>
-                        <Minimize />
-                    </div>
+                    {user && (
+                        <>
+                            <div
+                                ref={avatarRef}
+                                className={cls.userAvatar}
+                                onClick={() => setOpen(prev => !prev)}>
+                                <Minimize />
+                            </div>
+                            {open && (
+                                <div
+                                    ref={modalRef}
+                                    className={cls.modal}>
+                                    <button onClick={handleNavigateToProfile}>
+                                        <User />
+                                        <span>Профиль</span>
+                                    </button>
+                                    <button onClick={handleLogout}>
+                                        <LogOut />
+                                        <span>
+                                           Выйти с аккаунта
+                                        </span>
+                                    </button>
+                                </div>
+                            )}
+                        </>
+                    )}
                 </div>
             </div>
         </div>

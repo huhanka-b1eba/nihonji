@@ -10,14 +10,14 @@ const AppRouter = () => (
         <ScrollToTop />
         <Suspense fallback={<Loader />}>
             <Routes>
-                {Object.values(routeConfig).map(({ element, path, authOnly }) => {
+                {Object.values(routeConfig).map(({ element, path, authOnly, routeKey }) => {
                     const content = authOnly ? (
                         <ProtectedRoute>{element}</ProtectedRoute>
                     ) : (
                         element
                     );
                     return (
-                        <Route key={path} path={path} element={content}/>
+                        <Route key={routeKey} path={path} element={content}/>
                     )
                 })}
             </Routes>

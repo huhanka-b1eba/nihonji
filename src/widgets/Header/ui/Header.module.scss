@@ -120,4 +120,75 @@
     rotate: 12deg;
     border-radius: 50px;
     background: #212121;
+    cursor: pointer;
 }
+
+
+.modal {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 5px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    min-width: 200px;
+    padding: 14px 12px;
+
+    background: rgba(20, 20, 20, 0.85);
+    backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+
+    animation: modalFadeIn 0.18s ease-out;
+    z-index: 100;
+
+    button {
+        width: 100%;
+        padding: 10px 12px;
+
+        background: transparent;
+        border: none;
+        color: white;
+        font-size: 16px;
+
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        border-radius: 8px;
+        cursor: pointer;
+
+        transition: 0.2s;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ff6b81;
+        }
+
+        svg {
+            width: 18px;
+            height: 18px;
+            opacity: 0.7;
+            transition: 0.2s;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+

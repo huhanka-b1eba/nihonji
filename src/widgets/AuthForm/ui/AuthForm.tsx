@@ -25,7 +25,6 @@ export const AuthForm: React.FC<AuthFormProps> = ({
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [sentVerification, setSentVerification] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -50,68 +49,55 @@ export const AuthForm: React.FC<AuthFormProps> = ({
 
     return (
         <form className={cls.form} onSubmit={handleSubmit}>
-            {sentVerification ? (
-                <div className={cls.verificationMessage}>
-                    Письмо с подтверждением отправлено на <strong>{email}</strong>. Проверьте почту!
-                    {switchLink && (
-                        <button className={cls.loginBtn} onClick={() => navigate(switchLink.to)}>
-                            {switchLink.text}
-                        </button>
-                    )}
-                </div>
-            ) : (
-                <>
-                    <Input
-                        label="Email"
-                        type="email"
-                        value={email}
-                        placeholder="you@example.com"
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
+                <Input
+                    label="Email"
+                    type="email"
+                    value={email}
+                    placeholder="you@example.com"
+                    onChange={(e) => setEmail(e.target.value)}
+                />
 
-                    <div className={cls.field}>
-                        <label>Пароль</label>
-                        <div className={cls.passwordRow}>
-                            <input
-                                type={showPassword ? "text" : "password"}
-                                value={password}
-                                placeholder="Минимум 8 символов"
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                            <button
-                                type="button"
-                                className={cls.showBtn}
-                                onClick={() => setShowPassword((s) => !s)}
-                            >
-                                {showPassword ? <EyeOff /> : <Eye />}
-                            </button>
-                        </div>
+                <div className={cls.field}>
+                    <label>Пароль</label>
+                    <div className={cls.passwordRow}>
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            value={password}
+                            placeholder="Минимум 8 символов"
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <button
+                            type="button"
+                            className={cls.showBtn}
+                            onClick={() => setShowPassword((s) => !s)}
+                        >
+                            {showPassword ? <EyeOff /> : <Eye />}
+                        </button>
                     </div>
+                </div>
 
-                    {mode === "register" && (
-                        <div className={cls.field}>
-                            <label>Повторите пароль</label>
-                            <input
-                                type="password"
-                                value={confirm}
-                                placeholder="Введите пароль ещё раз"
-                                onChange={(e) => setConfirm(e.target.value)}
-                            />
-                        </div>
-                    )}
+                {mode === "register" && (
+                    <div className={cls.field}>
+                        <label>Повторите пароль</label>
+                        <input
+                            type="password"
+                            value={confirm}
+                            placeholder="Введите пароль ещё раз"
+                            onChange={(e) => setConfirm(e.target.value)}
+                        />
+                    </div>
+                )}
 
-                    {error && <div className={cls.error}>{error}</div>}
+                {error && <div className={cls.error}>{error}</div>}
 
-                    <button className={cls.submit} type="submit" disabled={loading}>
-                        {loading ? (mode === "register" ? "Создаём..." : "Вход...") : submitLabel ?? (mode === "register" ? "Зарегистрироваться" : "Войти")}
+                <button className={cls.submit} type="submit" disabled={loading}>
+                    {loading ? (mode === "register" ? "Создаём..." : "Вход...") : submitLabel ?? (mode === "register" ? "Зарегистрироваться" : "Войти")}
+                </button>
+
+                {switchLink && (
+                    <button type="button" className={cls.loginLink} onClick={() => navigate(switchLink.to)}>
+                        {switchLink.text}
                     </button>
-
-                    {switchLink && (
-                        <button type="button" className={cls.loginLink} onClick={() => navigate(switchLink.to)}>
-                            {switchLink.text}
-                        </button>
-                    )}
-                </>
             )}
         </form>
     );
