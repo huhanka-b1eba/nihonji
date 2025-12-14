@@ -2,7 +2,7 @@
   background: #050609;
   color: #fff;
   min-height: 100vh;
-  font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-family-main);
   box-sizing: border-box;
 }
 
@@ -99,7 +99,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  font-family: "Roboto", sans-serif;
+  font-family: var(--font-family-main);
   background: #2ea3ff;
   color: #fff;
   border: none;
@@ -137,6 +137,7 @@
 }
 
 .title {
+  font-family: var(--font-family-secondary);
   font-size: 24px;
   margin: 0 0 6px 0;
   color: #ffffff;
@@ -160,7 +161,7 @@
 .tabs {
   display: flex;
   justify-content: space-around;
-  font-family: "Roboto", sans-serif;
+  font-family: var(--font-family-main);
   font-weight: 400;
   gap: 18px;
   align-items: center;
