@@ -3,7 +3,7 @@ import cls from "./PopularPage.module.scss";
 import { classNames } from "shared/lib/classNames/classNames";
 import { AnimeList } from "widgets/AnimeList";
 import { ListHeader } from "shared/ui/ListHeader";
-import { useGetAnimeQuery } from "entities/anime/api/animeApi";
+import { type GetAnimeArgs, useGetAnimeQuery } from "entities/anime/api/animeApi";
 import { Loader } from "shared/ui/Loader";
 import type { Anime } from "entities/anime/model/anime";
 
@@ -16,7 +16,14 @@ const PAGE_LIMIT = 24;
 export const PopularPage: React.FC<PopularPageProps> = ({ className }) => {
     const [page, setPage] = useState(1);
     const [allItems, setAllItems] = useState<Anime[]>([]);
-    const [sortBool, setSortBool] = useState<"asc" | "desc">("asc");
+    const [sortBool, setSortBool] = useState<"asc" | "desc">("desc");
+
+    const [filters, setFilters] = useState<GetAnimeArgs>({
+        type: undefined,
+        status: undefined,
+        sfw: true,
+    });
+
     const sentinelRef = useRef<HTMLDivElement | null>(null);
     const observerRef = useRef<IntersectionObserver | null>(null);
 
@@ -27,34 +34,28 @@ export const PopularPage: React.FC<PopularPageProps> = ({ className }) => {
         isFetching,
     } = useGetAnimeQuery(
         {
-            // популярное по умолчанию, без ограничения по статусу
+            ...filters,
             order_by: "popularity",
             sort: sortBool,
-            sfw: true,
             page,
             limit: PAGE_LIMIT,
         },
         { refetchOnMountOrArgChange: false }
     );
 
-    // сбрасываем список при смене сортировки
     useEffect(() => {
         setPage(1);
         setAllItems([]);
-    }, [sortBool]);
+    }, [filters, sortBool]);
 
-    // фильтрация и агрегация страниц
     useEffect(() => {
         if (!rawData || !Array.isArray(rawData)) return;
 
         const isKids = (a: any) => {
-            const raw = (a?.rating ?? "").toString().trim();
-            if (!raw) return false; // unknown — считать не детским
-
-            const r = raw.toUpperCase();
-
-            if (/^G(\s|-|$)/.test(r)) return true;
-            if (/^PG(\s|-)/.test(r) && !/^PG-13/.test(r)) return true;
+            const raw = (a?.rating ?? "").toString().trim().toUpperCase();
+            if (!raw) return false;
+            if (/^G(\s|-|$)/.test(raw)) return true;
+            if (/^PG(\s|-)/.test(raw) && !/^PG-13/.test(raw)) return true;
             return false;
         };
 
@@ -63,64 +64,58 @@ export const PopularPage: React.FC<PopularPageProps> = ({ className }) => {
 
             if (page === 1) return pageItems;
 
-            const existingIds = new Set(prev.map((a) => String(a.mal_id ?? a.id ?? a.title)));
-            const toAdd = pageItems.filter((a) => !existingIds.has(String(a.mal_id ?? a.id ?? a.title)));
+            const ids = new Set(prev.map((a) => String(a.mal_id ?? a.title)));
+            const toAdd = pageItems.filter(
+                (a) => !ids.has(String(a.mal_id ?? a.title))
+            );
+
             return prev.concat(toAdd);
         });
     }, [rawData, page]);
 
-    const lastFetchedCount = Array.isArray(rawData) ? rawData.length : 0;
-    const hasMore = lastFetchedCount === PAGE_LIMIT;
+    const hasMore =
+        Array.isArray(rawData) && rawData.length === PAGE_LIMIT;
 
-    // IntersectionObserver -> подгружаем следующую страницу
     useEffect(() => {
-        if (observerRef.current) {
-            observerRef.current.disconnect();
-            observerRef.current = null;
-        }
+        if (observerRef.current) observerRef.current.disconnect();
 
         const sentinel = sentinelRef.current;
         if (!sentinel) return;
 
         const io = new IntersectionObserver(
             (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        if (!isFetching && !isLoading && hasMore) {
-                            setPage((p) => p + 1);
-                        }
-                    }
-                });
+                if (
+                    entries[0].isIntersecting &&
+                    !isFetching &&
+                    !isLoading &&
+                    hasMore
+                ) {
+                    setPage((p) => p + 1);
+                }
             },
-            {
-                root: null,
-                rootMargin: "200px",
-                threshold: 0.1,
-            }
+            { rootMargin: "200px" }
         );
 
         io.observe(sentinel);
         observerRef.current = io;
 
-        return () => {
-            io.disconnect();
-            if (observerRef.current) observerRef.current.disconnect();
-            observerRef.current = null;
-        };
+        return () => io.disconnect();
     }, [isFetching, isLoading, hasMore]);
-
-    const handleLoadMore = () => {
-        if (!isFetching && hasMore) setPage((p) => p + 1);
-    };
 
     return (
         <div className={classNames(cls.Popular, {}, [className])}>
             <div className="container">
                 <ListHeader
                     title="Популярное"
-                    sortName={sortBool === "desc" ? "Сначала популярное" : "Сначала менее популярное"}
+                    sortName={
+                        sortBool === "desc"
+                            ? "Сначала популярное"
+                            : "Сначала менее популярное"
+                    }
                     sortBool={sortBool}
                     setSortBool={setSortBool}
+                    onApply={setFilters}
+                    value={filters}
                 />
 
                 {isLoading && (
@@ -130,7 +125,9 @@ export const PopularPage: React.FC<PopularPageProps> = ({ className }) => {
                 )}
 
                 {error && allItems.length === 0 && (
-                    <div className={cls.error}>Не удалось загрузить популярное. Попробуйте позже.</div>
+                    <div className={cls.error}>
+                        Не удалось загрузить популярное
+                    </div>
                 )}
 
                 {allItems.length > 0 && <AnimeList items={allItems} />}
@@ -138,22 +135,15 @@ export const PopularPage: React.FC<PopularPageProps> = ({ className }) => {
                 {(isFetching || isLoading) && allItems.length > 0 && (
                     <div className={cls.fetching}>
                         <Loader />
-                        <span className={cls.fetchingText}>Загрузка...</span>
                     </div>
                 )}
 
-                <div ref={sentinelRef} style={{ height: 1, width: "100%" }} />
-
-                {!isLoading && allItems.length > 0 && hasMore && (
-                    <div className={cls.loadMoreWrap}>
-                        <button className={cls.loadMoreBtn} onClick={handleLoadMore} disabled={isFetching}>
-                            {isFetching ? "Загружаем..." : "Загрузить ещё"}
-                        </button>
-                    </div>
-                )}
+                <div ref={sentinelRef} style={{ height: 1 }} />
 
                 {!isLoading && !hasMore && allItems.length > 0 && (
-                    <div className={cls.endMessage}>Показаны все доступные результаты.</div>
+                    <div className={cls.endMessage}>
+                        Показаны все доступные результаты
+                    </div>
                 )}
             </div>
         </div>
