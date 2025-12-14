@@ -1,0 +1,14 @@
+.ThemeSwitcher {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+  padding: 4px;
+
+  transition: 0.2s;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}

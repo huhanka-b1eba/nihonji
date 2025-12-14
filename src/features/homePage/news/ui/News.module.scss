@@ -10,7 +10,6 @@
   .bg {
     position: absolute;
     inset: 0;
-    background: url("/news-bg.jpg") center/cover no-repeat;
     opacity: 0.15;
     mix-blend-mode: lighten;
     pointer-events: none;
@@ -31,7 +30,8 @@
   }
 
   .viewAll {
-    color: #ff9f43;
+    font-family: var(--font-family-secondary);
+    color: var(--secondary-color);
     font-size: 16px;
     cursor: pointer;
     font-weight: 600;
@@ -81,6 +81,7 @@
     gap: 6px;
 
     .title {
+      font-family: var(--font-family-secondary);
       font-size: 20px;
       font-weight: 700;
       color: #fff;
@@ -135,6 +136,7 @@
     gap: 4px;
 
     .title {
+      font-family: var(--font-family-secondary);
       font-size: 14px;
       font-weight: 600;
       color: #fff;
@@ -148,7 +150,7 @@
 
     .author {
       font-size: 12px;
-      color: #ffb36b;
+      color: var(--secondary-color);
     }
   }
 }

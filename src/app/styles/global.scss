@@ -1,43 +1,20 @@
+@use "themes/dark";
+@use "themes/light";
+
 body {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-family-main);
   font-weight: 400;
-  background: #000000;
-  color: #fff;
   outline: none;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-a {
-  text-decoration: none;
+.app {
+  min-height: 100vh;
+  background: var(--bg-color);
+  color: var(--primary-color);
 }
 
 .container {
-  max-width: 1730px;
+  max-width: var(--container-height-2xl);
   margin: 0 auto;
   width: 100%;
-}
-
-button,
-a,
-input,
-textarea,
-select {
-  background: transparent;
-  border: none;
-  outline: none;
-  transition: all 0.3s ease;
-}
-
-button:focus,
-a:focus,
-input:focus,
-textarea:focus,
-select:focus {
-}
-
-button:hover,
-a:hover {
 }

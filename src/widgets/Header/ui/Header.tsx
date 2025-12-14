@@ -1,9 +1,10 @@
 import {Link} from "react-router";
 import cls from './Header.module.scss';
-import {LogOut, Minimize, Moon, Search, User} from "lucide-react";
+import {LogOut, Minimize, Search, User} from "lucide-react";
 import {useAuth} from "app/providers/auth/AuthProvider.tsx";
 import {useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {ThemeSwitcher} from "shared/ui/ThemeSwitcher";
 
 
 const Header = () => {
@@ -59,11 +60,10 @@ const Header = () => {
                 </div>
                 <div className={cls.right}>
                     <div className={cls.toggles}>
-                        <Link to="/search" className={cls.toggleTheme}><Search /></Link>
+                        <Link to="/search" className={cls.search}><Search /></Link>
                         <button className={cls.toggleLang}>RU</button>
-                        <button className={cls.toggleTheme}>
-                            <Moon />
-                        </button>
+
+                        <ThemeSwitcher className={cls.toggleTheme} />
                     </div>
                     {user && (
                         <>

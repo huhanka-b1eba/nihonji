@@ -2,8 +2,8 @@
   font-size: 32px;
   font-weight: 700;
   margin-bottom: 24px;
+  font-family: var(--font-family-secondary);
 
-  text-shadow: 0 0 10px rgba(180, 86, 255, 0.35);
 }
 
 .topRow {
@@ -20,6 +20,7 @@
 }
 
 .controls {
+  font-family: var(--font-family-secondary);
   display: flex;
   align-items: center;
   gap: 18px;
@@ -63,9 +64,9 @@
   right: 0;
   height: 100%;
   width: 680px;
-  background: #000;
+  background: var(--bg-color);
   padding: 100px 24px 32px;
-  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.8);
+  box-shadow: -10px 0 40px rgb(var(--bg-color-rgb) / var(--bg-shadow-opacity));
   animation: slideIn 0.25s ease forwards;
 
   display: flex;

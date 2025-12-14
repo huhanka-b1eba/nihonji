@@ -1,1 +1,16 @@
-// цвета, отступы, размеры
+:root {
+  --font-family-main: "Roboto", sans-serif;
+  --font-family-secondary: "Montserrat", sans-serif;
+  --font-size-m: 16px;
+  --font-line-m: 24px;
+  --font-m: var(--font-size-m) / var(--font-line-m) var(--font-family-main);
+  --font-size-l: 24px;
+  --font-line-l: 32px;
+  --font-l: var(--font-size-l) / var(--font-line-l) var(--font-family-main);
+
+  // Размеры
+  --header-height: 50px;
+  --container-height-2xl: 1730px;
+  --container-height-xl: 1430px;
+  --container-height-ml: 1730px;
+}
