@@ -1,6 +1,6 @@
 import {Link} from "react-router";
 import cls from './Header.module.scss';
-import {LogOut, Minimize, Moon, Search, User} from "lucide-react";
+import {LogOut, Minimize, Search, User} from "lucide-react";
 import {useAuth} from "app/providers/auth/AuthProvider.tsx";
 import {useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";

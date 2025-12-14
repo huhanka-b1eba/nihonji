@@ -32,7 +32,7 @@
                           rgba(5,6,9,1) 100%
           ),
           url("https://cdn.shopify.com/s/files/1/0657/3100/2634/files/petites-arches-3_59923a83-a29d-4a56-9b6e-498538dc4f74.png?v=1730983516&utm_source=chatgpt.com"); /* японские волны */
-
+  filter: brightness(var(--bg-brightness));
   background-size: 2000px cover;
   background-repeat: repeat;
   opacity: 0.45;
@@ -44,15 +44,12 @@
   to { background-position: 600px 0; }
 }
 
-
-
-
 .heroPanel {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgb(var(--bg-color-rgb) / var(--bg-opacity));
   border-top: 1px solid rgba(255,255,255,0.03);
   z-index: 3;
   display: flex;
@@ -190,7 +187,7 @@
 
 .content {
   padding: 34px 20px;
-  background: linear-gradient(180deg, rgba(5,6,9,1), rgba(3,5,7,1));
+  background: var(--bg-color);
 }
 
 .layout {
@@ -216,7 +213,6 @@
   padding: 12px;
   border-radius: 5px;
   color: rgba(255,255,255,0.85);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.55);
 }
 
 .mainColumn {

@@ -20,8 +20,6 @@ export const Footer = ({ className }: FooterProps) => {
                     <nav className={cls.nav}>
                         <a href="/">Главная</a>
                         <a href="/catalog">Каталог</a>
-                        <a href="/selections">Подборки</a>
-                        <a href="/about">О нас</a>
                     </nav>
 
                     <div className={cls.socials}>
