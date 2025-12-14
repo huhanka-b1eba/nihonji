@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import cls from "./CatalogPage.module.scss";
 import type { Anime } from "entities/anime/model/anime.ts";
-import { useGetAnimeQuery } from "entities/anime/api/animeApi.ts";
+import {type GetAnimeArgs, useGetAnimeQuery} from "entities/anime/api/animeApi.ts";
 import { classNames } from "shared/lib/classNames/classNames.ts";
 import { Loader } from "shared/ui/Loader";
 import { AnimeList } from "widgets/AnimeList";
@@ -17,31 +17,22 @@ const SORT_OPTIONS = [
     { value: "favorites", label: "По добавлениям в избранное" },
 ];
 
-const TYPE_OPTIONS = [
-    { value: "", label: "Все" },
-    { value: "tv", label: "Сериалы" },
-    { value: "movie", label: "Фильмы" },
-    { value: "ova", label: "OVA" },
-    { value: "ona", label: "ONA" },
-    { value: "special", label: "Спешлы" },
-];
-
 const CatalogPage: React.FC = () => {
     const [page, setPage] = useState(1);
     const [allItems, setAllItems] = useState<Anime[]>([]);
-    const [sort, setSort] = useState("popularity");
+    const [sort, setSort] = useState();
     const [sortBool, setSortBool] = useState<"asc" | "desc">("asc");
-    const [type, setType] = useState<string>("");
     const [query, setQuery] = useState("");
     const [debouncedQuery, setDebouncedQuery] = useState("");
 
+    const [filters, setFilters] = useState<GetAnimeArgs>({
+        type: undefined,
+        status: undefined,
+        sfw: true,
+    });
+
     const sentinelRef = useRef<HTMLDivElement | null>(null);
     const observerRef = useRef<IntersectionObserver | null>(null);
-
-    useEffect(() => {
-        const t = setTimeout(() => setDebouncedQuery(query), 600);
-        return () => clearTimeout(t);
-    }, [query]);
 
     const {
         data: rawData,
@@ -50,24 +41,21 @@ const CatalogPage: React.FC = () => {
         error,
     } = useGetAnimeQuery(
         {
+            ...filters,
             q: debouncedQuery || undefined,
-            type: type || undefined,
-            order_by: sort,
+            order_by: "popularity",
             sort: sortBool,
             page,
             limit: PAGE_LIMIT,
-            sfw: true,
         },
         { refetchOnMountOrArgChange: true }
     );
 
-    // reset list when params change
     useEffect(() => {
         setPage(1);
         setAllItems([]);
-    }, [sort, sortBool, type, debouncedQuery]);
+    }, [sort, sortBool, debouncedQuery, filters]);
 
-    // append data
     useEffect(() => {
         if (!rawData || !Array.isArray(rawData)) return;
 
@@ -114,6 +102,8 @@ const CatalogPage: React.FC = () => {
                     sortName={SORT_OPTIONS.find((s) => s.value === sort)?.label ?? "Сортировать"}
                     sortBool={sortBool}
                     setSortBool={setSortBool}
+                    onApply={setFilters}
+                    value={filters}
                 />
 
                 <div className={cls.filters}>
