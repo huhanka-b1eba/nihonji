@@ -78,6 +78,8 @@ export const SearchPage: React.FC<SearchPageProps> = ({ className }) => {
       { root: null, rootMargin: "200px", threshold: 0.1 }
     );
 
+
+
     io.observe(sentinel);
     observerRef.current = io;
 
@@ -88,12 +90,25 @@ export const SearchPage: React.FC<SearchPageProps> = ({ className }) => {
     };
   }, [isFetching, isLoading, hasMore, debouncedQuery]);
 
-  const handleLoadMore = () => {
-    if (!isFetching && hasMore) setPage((p) => p + 1);
-  };
+  useEffect(() => {
+    if (!rawData || !Array.isArray(rawData)) return;
+
+    setAllItems((prev) => {
+      if (page === 1) {
+        return rawData as Anime[];
+      }
+
+      const existing = new Set(prev.map((a) => a.mal_id));
+      const newOnes = (rawData as Anime[]).filter(
+          (a) => !existing.has(a.mal_id)
+      );
+
+      return [...prev, ...newOnes];
+    });
+  }, [rawData, page]);
+
 
   const showEmptyPrompt = !debouncedQuery && !query;
-  const noResults = debouncedQuery && !isLoading && !isFetching && allItems.length === 0;
 
   return (
     <div className={classNames(cls.SearchPage, {}, [className])}>
@@ -125,43 +140,27 @@ export const SearchPage: React.FC<SearchPageProps> = ({ className }) => {
             </div>
         )}
 
-        {isLoading && page === 1 && (
-          <div className={cls.center}>
-            <Loader />
-          </div>
+        {!showEmptyPrompt && (
+            <AnimeList
+                items={allItems}
+                isLoading={
+                    !!debouncedQuery &&
+                    page === 1 &&
+                    allItems.length === 0
+                }
+                skeletonCount={12}
+                emptyText={t("search.noResults")}
+            />
         )}
 
-        {noResults && (
-            <div className={cls.noResults}>
-              {t("search.noResults")}
-            </div>
-        )}
 
-
-        {allItems.length > 0 && <AnimeList items={allItems} />}
-
-        {(isFetching || isLoading) && allItems.length > 0 && (
+        {isFetching && !isLoading && allItems.length > 0 && (
             <div className={cls.fetching}>
               <Loader />
             </div>
         )}
 
-
         <div ref={sentinelRef} style={{ height: 1, width: "100%" }} />
-
-        {!isLoading && allItems.length > 0 && hasMore && (
-          <div className={cls.loadMoreWrap}>
-            <button
-                className={cls.loadMoreBtn}
-                onClick={handleLoadMore}
-                disabled={isFetching}
-            >
-              {isFetching
-                  ? t("search.loading.fetching")
-                  : t("search.loadMore")}
-            </button>
-          </div>
-        )}
 
         {error && (
             <div className={cls.error}>

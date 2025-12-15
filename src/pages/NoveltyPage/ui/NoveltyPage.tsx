@@ -37,6 +37,7 @@ export const NoveltyPage: React.FC<NoveltyPageProps> = ({ className }) => {
     {
       ...filters,
       order_by: "popularity",
+      status: "airing",
       sort: sortBool,
       page,
       limit: PAGE_LIMIT,
