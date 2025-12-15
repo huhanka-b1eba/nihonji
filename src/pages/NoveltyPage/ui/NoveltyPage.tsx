@@ -37,6 +37,7 @@ export const NoveltyPage: React.FC<NoveltyPageProps> = ({ className }) => {
     {
       ...filters,
       order_by: "popularity",
+      status: "airing",
       sort: sortBool,
       page,
       limit: PAGE_LIMIT,
@@ -139,11 +140,7 @@ export const NoveltyPage: React.FC<NoveltyPageProps> = ({ className }) => {
             value={filters}
         />
 
-        {isLoading && (
-          <div className={cls.center}>
-            <Loader />
-          </div>
-        )}
+
 
         {error && allItems.length === 0 && (
             <div className={cls.error}>{t("novelty.error")}</div>
@@ -152,11 +149,13 @@ export const NoveltyPage: React.FC<NoveltyPageProps> = ({ className }) => {
 
         {allItems.length > 0 && <AnimeList items={allItems} />}
 
-        {(isFetching || isLoading) && allItems.length > 0 && (
-            <div className={cls.fetching}>
-              <Loader />
-            </div>
-        )}
+        <AnimeList
+            items={allItems}
+            isLoading={isLoading}
+            skeletonCount={12}
+            emptyText={t("catalog.empty")}
+        />
+
 
 
         <div ref={sentinelRef} style={{ height: 1, width: "100%" }} />

@@ -1,3 +1,3 @@
-import { AnimeDetailPage } from "./ui/AnimeDetailPage.tsx";
+import { AnimeDetailPage } from "./ui/AnimeDetailPage/AnimeDetailPage.tsx";
 
 export { AnimeDetailPage };

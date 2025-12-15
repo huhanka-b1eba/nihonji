@@ -1,7 +1,7 @@
 import { Star } from "lucide-react";
 import { classNames } from "shared/lib/classNames/classNames.ts";
 import cls from "./AnimeCard.module.scss";
-import type { Anime } from "../model/anime.ts";
+import type { Anime } from "../../model/anime.ts";
 
 interface AnimeCardProps {
   anime: Anime;

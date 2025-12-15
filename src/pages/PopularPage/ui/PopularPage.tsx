@@ -112,23 +112,17 @@ export const PopularPage: React.FC<PopularPageProps> = ({ className }) => {
             value={filters}
         />
 
-        {isLoading && (
-          <div className={cls.center}>
-            <Loader />
-          </div>
-        )}
-
         {error && allItems.length === 0 && (
             <div className={cls.error}>{t("popular.error")}</div>
         )}
 
-        {allItems.length > 0 && <AnimeList items={allItems} />}
 
-        {(isFetching || isLoading) && allItems.length > 0 && (
-          <div className={cls.fetching}>
-            <Loader />
-          </div>
-        )}
+        <AnimeList
+            items={allItems}
+            isLoading={isLoading}
+            skeletonCount={12}
+            emptyText={t("catalog.empty")}
+        />
 
         <div ref={sentinelRef} style={{ height: 1 }} />
 
@@ -141,5 +135,3 @@ export const PopularPage: React.FC<PopularPageProps> = ({ className }) => {
     </div>
   );
 };
-
-export default PopularPage;

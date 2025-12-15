@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import type { Anime } from "entities/anime/model/anime.ts";
 import { type GetAnimeArgs, useGetAnimeQuery } from "entities/anime/api/animeApi.ts";
 import { classNames } from "shared/lib/classNames/classNames.ts";
-import { Loader } from "shared/ui/Loader";
 import { AnimeList } from "widgets/AnimeList";
 import { ListHeader } from "shared/ui/ListHeader";
 import { SearchInput } from "shared/ui/SearchInput/ui/SearchInput.tsx";
@@ -136,13 +135,13 @@ const CatalogPage: React.FC = () => {
             </div>
         )}
 
-        {allItems.length > 0 && <AnimeList items={allItems} />}
+        <AnimeList
+            items={allItems}
+            isLoading={isLoading}
+            skeletonCount={12}
+            emptyText={t("catalog.empty")}
+        />
 
-        {(isFetching || isLoading) && (
-          <div className={cls.center}>
-            <Loader />
-          </div>
-        )}
 
         <div ref={sentinelRef} style={{ height: 1 }} />
 
