@@ -8,7 +8,6 @@ import {
   useGetAnimePictureQuery,
   useGetAnimeStaffQuery,
 } from "entities/anime/api/animeApi.ts";
-import { Loader } from "shared/ui/Loader";
 import { Star, Trophy, Play, Search } from "lucide-react";
 
 import type { AnimeCharacter, AnimeStaff } from "anime/model/anime";
@@ -18,7 +17,7 @@ import {
   formatDate,
   joinNames,
   pickImage,
-} from "shared/utils/animeHelpers";
+} from "shared/utils/animeHelpers.ts";
 
 import { PosterCard } from "features/animeDetailPage/PosterCard";
 import { SectionHeader } from "features/animeDetailPage/SectionHeader";
@@ -26,6 +25,7 @@ import { CharacterCard } from "features/animeDetailPage/CharacterCard";
 import { StaffCard } from "features/animeDetailPage/StaffCard";
 import cls from "./AnimeDetailPage.module.scss";
 import {useTranslation} from "react-i18next";
+import {AnimeDetailSkeleton} from "pages/AnimeDetailPage/ui/AnimeDetailSkeleton/AnimeDetailSkeleton.tsx";
 
 type ViewSection = "overview" | "characters" | "staff";
 
@@ -105,15 +105,15 @@ export const AnimeDetailPage: React.FC<AnimeDetailPageProps> = ({ className }) =
     setModalImageCaption(null);
   };
 
-  if (isLoading) {
+  if (!data && !error) {
     return (
-      <div className={classNames(cls.AnimeDetailPage, {}, [className])}>
-        <div className={cls.center}>
-          <Loader />
+        <div className={classNames(cls.AnimeDetailPage, {}, [className])}>
+          <AnimeDetailSkeleton />
         </div>
-      </div>
     );
   }
+
+
 
   if (error || !data) {
     return (
