@@ -219,5 +219,32 @@
       "loadingLogin": "Signing in...",
       "loadingRegister": "Creating account..."
     }
+  },
+  "profile": {
+    "notAuthorized": "You are not signed in.",
+
+    "status": {
+      "verified": "Verified",
+      "notVerified": "Not verified"
+    },
+
+    "verification": {
+      "send": "Send verification",
+      "sending": "Sending...",
+      "check": "Check now",
+      "checking": "Checking..."
+    },
+
+    "messages": {
+      "userNotFound": "User not found.",
+      "emailSent": "Verification email has been sent. Please check your spam folder.",
+      "emailVerified": "Email is verified.",
+      "emailNotVerified": "Email is still not verified.",
+      "sendError": "Error while sending email",
+      "checkError": "Error while checking",
+      "logoutError": "Error while logging out"
+    },
+
+    "logout": "Log out"
   }
 }

@@ -3,9 +3,10 @@ import { classNames } from "shared/lib/classNames/classNames";
 import { useAuth } from "app/providers/auth/AuthProvider";
 import { auth } from "shared/lib/firebase/firebase";
 import { sendEmailVerification } from "firebase/auth";
-import { Mail, CheckCircle, XCircle, RotateCw, LogOut } from "lucide-react";
+import { Mail, CheckCircle, XCircle, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import cls from "./ProfilePage.module.scss";
+import {useTranslation} from "react-i18next";
 
 interface ProfilePageProps {
   className?: string;
@@ -14,35 +15,47 @@ interface ProfilePageProps {
 export const ProfilePage: React.FC<ProfilePageProps> = ({ className }) => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
 
   const [loadingResend, setLoadingResend] = useState(false);
   const [loadingCheck, setLoadingCheck] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
 
+  const capitalizeFirst = (value: string) =>
+      value.charAt(0).toUpperCase() + value.slice(1);
+
   const handleResend = async () => {
-    if (!auth.currentUser) return setMessage("Пользователь не найден.");
+    if (!auth.currentUser) return setMessage(t("profile.messages.userNotFound"));
     setMessage(null);
     setLoadingResend(true);
     try {
       await sendEmailVerification(auth.currentUser);
-      setMessage("Письмо с подтверждением отправлено. Проверьте папку «Спам».");
+      if (auth.currentUser.emailVerified)
+        setMessage(t("profile.messages.emailVerified"));
+      else
+        setMessage(t("profile.messages.emailNotVerified"));
     } catch (err: any) {
-      setMessage(String(err?.message ?? "Ошибка при отправке"));
+      setMessage(String(err?.message ?? t("profile.messages.sendError")));
+
     } finally {
       setLoadingResend(false);
     }
   };
 
   const handleCheckNow = async () => {
-    if (!auth.currentUser) return setMessage("Пользователь не найден.");
+    if (!auth.currentUser)
+      return setMessage(t("profile.messages.userNotFound"));
     setMessage(null);
     setLoadingCheck(true);
     try {
       await auth.currentUser.reload();
-      if (auth.currentUser.emailVerified) setMessage("Email подтверждён.");
-      else setMessage("Email всё ещё не подтверждён.");
+      if (auth.currentUser.emailVerified)
+        setMessage(t("profile.messages.emailVerified"));
+      else
+        setMessage(t("profile.messages.emailNotVerified"));
     } catch (err: any) {
-      setMessage(String(err?.message ?? "Ошибка при проверке"));
+      setMessage(String(err?.message ?? t("profile.messages.checkError")));
     } finally {
       setLoadingCheck(false);
     }
@@ -53,7 +66,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ className }) => {
       await logout();
       navigate("/", { replace: true });
     } catch (err: any) {
-      setMessage(String(err?.message ?? "Ошибка при выходе"));
+      setMessage(String(err?.message ?? t("profile.messages.logoutError")));
     }
   };
 
@@ -65,7 +78,9 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ className }) => {
           <div className={cls.heroPanel}>
             <div className={cls.container}>
               <div className={cls.centerCard}>
-                <div className={cls.empty}>Вы не вошли в систему.</div>
+                <div className={cls.empty}>
+                  {t("profile.notAuthorized")}
+                </div>
               </div>
             </div>
           </div>
@@ -74,7 +89,10 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ className }) => {
     );
   }
 
-  const displayName = user.displayName ?? user.email?.split("@")[0] ?? "User";
+  const rawName =
+      user.displayName ?? user.email?.split("@")[0] ?? "user";
+
+  const displayName = capitalizeFirst(rawName);
 
   return (
     <div className={classNames(cls.ProfilePage, {}, [className])}>
@@ -95,11 +113,11 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ className }) => {
 
                     {user.emailVerified ? (
                       <span className={cls.verified}>
-                        <CheckCircle className={cls.verifiedIcon} /> Подтвержён
+                        <CheckCircle className={cls.verifiedIcon} /> {t("profile.status.verified")}
                       </span>
                     ) : (
                       <span className={cls.notVerified}>
-                        <XCircle className={cls.notVerifiedIcon} /> Не подтверждён
+                        <XCircle className={cls.notVerifiedIcon} /> {t("profile.status.notVerified")}
                       </span>
                     )}
                   </div>
@@ -114,13 +132,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ className }) => {
                       onClick={handleResend}
                       disabled={loadingResend}
                     >
-                      {loadingResend ? (
-                        <>
-                          <RotateCw className={cls.spin} /> Отправка...
-                        </>
-                      ) : (
-                        "Отправить подтверждение"
-                      )}
+                      {loadingResend ? t("profile.verification.sending") : t("profile.verification.send")}
                     </button>
 
                     <button
@@ -128,19 +140,13 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ className }) => {
                       onClick={handleCheckNow}
                       disabled={loadingCheck}
                     >
-                      {loadingCheck ? (
-                        <>
-                          <RotateCw className={cls.spin} /> Проверка...
-                        </>
-                      ) : (
-                        "Проверить сейчас"
-                      )}
+                      {loadingCheck ? t("profile.verification.checking") : t("profile.verification.check")}
                     </button>
                   </div>
                 )}
 
                 <button className={cls.logoutBtn} onClick={handleLogout}>
-                  <LogOut className={cls.btnIcon} /> Выйти
+                  <LogOut className={cls.btnIcon} /> {t("profile.logout")}
                 </button>
 
                 {message && <div className={cls.message}>{message}</div>}

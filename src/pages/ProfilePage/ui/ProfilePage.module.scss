@@ -30,9 +30,10 @@
     linear-gradient(180deg, rgb(5 6 9 / 95%) 0%, rgb(5 6 9 / 98%) 25%, rgb(5 6 9 / 100%) 100%),
     url("https://cdn.shopify.com/s/files/1/0657/3100/2634/files/petites-arches-3_59923a83-a29d-4a56-9b6e-498538dc4f74.png?v=1730983516");
   background-repeat: repeat;
-  background-size: 1600px auto;
+  filter: brightness(var(--bg-brightness));
+  background-size: 2000px auto;
   background-position: 0 0;
-  opacity: 0.45;
+  opacity: 0.95;
   animation: waveMove 14s linear infinite;
 }
 

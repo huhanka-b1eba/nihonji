@@ -221,5 +221,32 @@
       "loadingLogin": "Вход...",
       "loadingRegister": "Создаём..."
     }
+  },
+  "profile": {
+    "notAuthorized": "Вы не вошли в систему.",
+
+    "status": {
+      "verified": "Подтверждён",
+      "notVerified": "Не подтверждён"
+    },
+
+    "verification": {
+      "send": "Отправить подтверждение",
+      "sending": "Отправка...",
+      "check": "Проверить сейчас",
+      "checking": "Проверка..."
+    },
+
+    "messages": {
+      "userNotFound": "Пользователь не найден.",
+      "emailSent": "Письмо с подтверждением отправлено. Проверьте папку «Спам».",
+      "emailVerified": "Email подтверждён.",
+      "emailNotVerified": "Email всё ещё не подтверждён.",
+      "sendError": "Ошибка при отправке",
+      "checkError": "Ошибка при проверке",
+      "logoutError": "Ошибка при выходе"
+    },
+
+    "logout": "Выйти"
   }
 }
