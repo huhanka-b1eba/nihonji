@@ -5,6 +5,7 @@ describe("classNames", () => {
     expect(classNames("btn")).toBe("btn");
   });
 
+  
   test("adds additional classes", () => {
     expect(classNames("btn", {}, ["active", "large"])).toBe(
         "btn active large"
