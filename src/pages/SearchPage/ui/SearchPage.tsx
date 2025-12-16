@@ -6,7 +6,7 @@ import { Loader } from "shared/ui/Loader";
 import { AnimeList } from "widgets/AnimeList";
 import { SearchInput } from "shared/ui/SearchInput/ui/SearchInput.tsx";
 import cls from "./SearchPage.module.scss";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 interface SearchPageProps {
   className?: string;
@@ -78,8 +78,6 @@ export const SearchPage: React.FC<SearchPageProps> = ({ className }) => {
       { root: null, rootMargin: "200px", threshold: 0.1 }
     );
 
-
-
     io.observe(sentinel);
     observerRef.current = io;
 
@@ -99,14 +97,11 @@ export const SearchPage: React.FC<SearchPageProps> = ({ className }) => {
       }
 
       const existing = new Set(prev.map((a) => a.mal_id));
-      const newOnes = (rawData as Anime[]).filter(
-          (a) => !existing.has(a.mal_id)
-      );
+      const newOnes = (rawData as Anime[]).filter((a) => !existing.has(a.mal_id));
 
       return [...prev, ...newOnes];
     });
   }, [rawData, page]);
-
 
   const showEmptyPrompt = !debouncedQuery && !query;
 
@@ -118,55 +113,42 @@ export const SearchPage: React.FC<SearchPageProps> = ({ className }) => {
 
           <div className={cls.searchRow}>
             <SearchInput
-                initialValue={query}
-                debounceMs={DEBOUNCE_MS}
-                placeholder={t("search.input.placeholder")}
-                onChange={(v) => {
-                  setQuery(v);
-                  setPage(1);
-                }}
-                onDebounced={(v) => {
-                  setDebouncedQuery(v.trim());
-                  setPage(1);
-                  setAllItems([]);
-                }}
+              initialValue={query}
+              debounceMs={DEBOUNCE_MS}
+              placeholder={t("search.input.placeholder")}
+              onChange={(v) => {
+                setQuery(v);
+                setPage(1);
+              }}
+              onDebounced={(v) => {
+                setDebouncedQuery(v.trim());
+                setPage(1);
+                setAllItems([]);
+              }}
             />
           </div>
         </div>
 
-        {showEmptyPrompt && (
-            <div className={cls.hint}>
-              {t("search.hint")}
-            </div>
-        )}
+        {showEmptyPrompt && <div className={cls.hint}>{t("search.hint")}</div>}
 
         {!showEmptyPrompt && (
-            <AnimeList
-                items={allItems}
-                isLoading={
-                    !!debouncedQuery &&
-                    page === 1 &&
-                    allItems.length === 0
-                }
-                skeletonCount={12}
-                emptyText={t("search.noResults")}
-            />
+          <AnimeList
+            items={allItems}
+            isLoading={!!debouncedQuery && page === 1 && allItems.length === 0}
+            skeletonCount={12}
+            emptyText={t("search.noResults")}
+          />
         )}
 
-
         {isFetching && !isLoading && allItems.length > 0 && (
-            <div className={cls.fetching}>
-              <Loader />
-            </div>
+          <div className={cls.fetching}>
+            <Loader />
+          </div>
         )}
 
         <div ref={sentinelRef} style={{ height: 1, width: "100%" }} />
 
-        {error && (
-            <div className={cls.error}>
-              {t("search.error")}
-            </div>
-        )}
+        {error && <div className={cls.error}>{t("search.error")}</div>}
       </div>
     </div>
   );

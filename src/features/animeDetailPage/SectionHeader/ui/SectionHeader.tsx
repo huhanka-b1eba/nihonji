@@ -1,5 +1,5 @@
 import cls from "./SectionHeader.module.scss";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   title: string;
@@ -7,19 +7,13 @@ type Props = {
   showAllLabel?: string;
 };
 
-
 export const SectionHeader = ({ title, onShowAll, showAllLabel }: Props) => {
-    const { t } = useTranslation();
+  const { t } = useTranslation();
 
-    return (
-        <div className={cls.header}>
-            <h3>{title}</h3>
-            {onShowAll && (
-                <button onClick={onShowAll}>
-                    {showAllLabel ?? t("common.showAll")}
-                </button>
-            )}
-        </div>
-    );
+  return (
+    <div className={cls.header}>
+      <h3>{title}</h3>
+      {onShowAll && <button onClick={onShowAll}>{showAllLabel ?? t("common.showAll")}</button>}
+    </div>
+  );
 };
-

@@ -49,3 +49,23 @@
     color: var(--btn-yellow-color);
   }
 }
+
+@media (max-width: 1023px) {
+  .AnimeCard {
+    width: 220px;
+
+    .imgWrapper {
+      height: 340px;
+    }
+  }
+}
+
+@media (max-width: 766px) {
+  .AnimeCard {
+    width: 180px;
+
+    .imgWrapper {
+      height: 260px;
+    }
+  }
+}

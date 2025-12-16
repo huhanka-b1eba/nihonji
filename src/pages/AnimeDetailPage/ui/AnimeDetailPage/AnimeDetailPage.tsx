@@ -24,8 +24,8 @@ import { SectionHeader } from "features/animeDetailPage/SectionHeader";
 import { CharacterCard } from "features/animeDetailPage/CharacterCard";
 import { StaffCard } from "features/animeDetailPage/StaffCard";
 import cls from "./AnimeDetailPage.module.scss";
-import {useTranslation} from "react-i18next";
-import {AnimeDetailSkeleton} from "pages/AnimeDetailPage/ui/AnimeDetailSkeleton/AnimeDetailSkeleton.tsx";
+import { useTranslation } from "react-i18next";
+import { AnimeDetailSkeleton } from "pages/AnimeDetailPage/ui/AnimeDetailSkeleton/AnimeDetailSkeleton.tsx";
 
 type ViewSection = "overview" | "characters" | "staff";
 
@@ -107,20 +107,16 @@ export const AnimeDetailPage: React.FC<AnimeDetailPageProps> = ({ className }) =
 
   if (!data && !error) {
     return (
-        <div className={classNames(cls.AnimeDetailPage, {}, [className])}>
-          <AnimeDetailSkeleton />
-        </div>
+      <div className={classNames(cls.AnimeDetailPage, {}, [className])}>
+        <AnimeDetailSkeleton />
+      </div>
     );
   }
-
-
 
   if (error || !data) {
     return (
       <div className={classNames(cls.AnimeDetailPage, {}, [className])}>
-        <div className={cls.center}>
-          {t("animeDetail.error")}
-        </div>
+        <div className={cls.center}>{t("animeDetail.error")}</div>
       </div>
     );
   }
@@ -161,9 +157,9 @@ export const AnimeDetailPage: React.FC<AnimeDetailPageProps> = ({ className }) =
               <p className={cls.synopsisShort}>
                 {data.synopsis
                   ? data.synopsis.length > 360
-                    ? `${data.synopsis.slice(0, 360)  }...`
+                    ? `${data.synopsis.slice(0, 360)}...`
                     : data.synopsis
-                    : t("animeDetail.noDescription")}
+                  : t("animeDetail.noDescription")}
               </p>
 
               <nav className={cls.tabs}>
@@ -212,11 +208,12 @@ export const AnimeDetailPage: React.FC<AnimeDetailPageProps> = ({ className }) =
                 <strong>{t("animeDetail.info.source")}:</strong> {data.source ?? "—"}
               </li>
               <li>
-                <strong>{t("animeDetail.info.seasonYear")}:</strong> {data.season ?? "—"} {data.year ?? ""}
+                <strong>{t("animeDetail.info.seasonYear")}:</strong> {data.season ?? "—"}{" "}
+                {data.year ?? ""}
               </li>
               <li>
-                <strong>{t("animeDetail.info.aired")}:</strong> {formatDate((data.aired as any)?.from)} —{" "}
-                {formatDate((data.aired as any)?.to)}
+                <strong>{t("animeDetail.info.aired")}:</strong>{" "}
+                {formatDate((data.aired as any)?.from)} — {formatDate((data.aired as any)?.to)}
               </li>
               <li>
                 <strong>{t("animeDetail.info.broadcast")}:</strong> {data.broadcast?.string ?? "—"}
@@ -338,7 +335,10 @@ export const AnimeDetailPage: React.FC<AnimeDetailPageProps> = ({ className }) =
                 )}
 
                 <section className={cls.section}>
-                  <SectionHeader title={t("animeDetail.sections.staff")} onShowAll={() => setActiveSection("staff")} />
+                  <SectionHeader
+                    title={t("animeDetail.sections.staff")}
+                    onShowAll={() => setActiveSection("staff")}
+                  />
                   <div className={cls.staffRow}>
                     {previewStaff.map((s: any, idx: number) => {
                       const person = s.person || s;
@@ -354,9 +354,7 @@ export const AnimeDetailPage: React.FC<AnimeDetailPageProps> = ({ className }) =
                       );
                     })}
                     {previewStaff.length === 0 && (
-                        <div className={cls.empty}>
-                          {t("animeDetail.fallbacks.noPictures")}
-                        </div>
+                      <div className={cls.empty}>{t("animeDetail.fallbacks.noPictures")}</div>
                     )}
                   </div>
                 </section>
@@ -365,8 +363,7 @@ export const AnimeDetailPage: React.FC<AnimeDetailPageProps> = ({ className }) =
 
             {activeSection === "characters" && (
               <section className={cls.section}>
-                <SectionHeader title={t("animeDetail.sections.allCharacters")}
-                />
+                <SectionHeader title={t("animeDetail.sections.allCharacters")} />
                 <div className={cls.charList}>
                   {allCharacters.length > 0 ? (
                     allCharacters.map((c: any, idx: number) => {

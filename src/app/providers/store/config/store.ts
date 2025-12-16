@@ -2,7 +2,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import { jikanApi } from "shared/api/jikanApi.ts";
 import { rootReducer } from "./rootReducer.ts";
 
-export const setupStore = () => configureStore({
+export const setupStore = () =>
+  configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(jikanApi.middleware),
   });

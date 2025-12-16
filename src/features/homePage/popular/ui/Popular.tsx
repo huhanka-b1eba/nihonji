@@ -6,7 +6,7 @@ import { SwiperBlock } from "shared/ui/SwiperBlock";
 import { Section } from "shared/ui/Section";
 import { Link } from "react-router";
 import { useMemo } from "react";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 interface PopularProps {
   animeList: Anime[];

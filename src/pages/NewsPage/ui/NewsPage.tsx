@@ -3,7 +3,7 @@ import { Loader } from "shared/ui/Loader";
 import { useMultiAnimeNews } from "entities/news/hooks/useMultiAnimeNews";
 import { ANIME_IDS } from "shared/config/newsConfig/newsIds.ts";
 import cls from "./NewsPage.module.scss";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 interface NewsPageProps {
   className?: string;
@@ -24,17 +24,10 @@ export const NewsPage = ({ className }: NewsPageProps) => {
           </div>
         )}
 
-        {error && (
-            <div className={cls.error}>
-              {t("news.error")}
-            </div>
-        )}
-
+        {error && <div className={cls.error}>{t("news.error")}</div>}
 
         {!isLoading && !error && news.length === 0 && (
-            <div className={cls.empty}>
-              {t("news.empty")}
-            </div>
+          <div className={cls.empty}>{t("news.empty")}</div>
         )}
 
         <div className={cls.grid}>
@@ -58,15 +51,13 @@ export const NewsPage = ({ className }: NewsPageProps) => {
                     </a>
                   </p>
 
-                  <p className={cls.excerpt}>
-                    {n.excerpt || t("news.noDescription")}
-                  </p>
+                  <p className={cls.excerpt}>{n.excerpt || t("news.noDescription")}</p>
 
                   <a
-                      href={n.forum_url || n.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className={cls.readMore}
+                    href={n.forum_url || n.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={cls.readMore}
                   >
                     {t("news.readMore")}
                   </a>

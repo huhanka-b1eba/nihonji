@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { useMultiAnimeNews } from "entities/news/hooks/useMultiAnimeNews";
 import { ANIME_IDS } from "shared/config/newsConfig/newsIds";
 import cls from "./News.module.scss";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 interface NewsProps {
   className?: string;

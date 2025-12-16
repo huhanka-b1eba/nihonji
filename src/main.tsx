@@ -6,7 +6,7 @@ import { ThemeProvider } from "app/providers/theme";
 import StoreProvider from "./app/providers/store/ui/StoreProvider.tsx";
 import App from "./app/App.tsx";
 
-import "shared/config/i18n/i18n.ts"
+import "shared/config/i18n/i18n.ts";
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>

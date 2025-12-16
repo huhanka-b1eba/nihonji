@@ -168,3 +168,22 @@
     transform: scaleX(1);
   }
 }
+
+@media (max-width: 1520px) {
+  .introContent {
+    max-width: 650px;
+    padding: 0 80px;
+  }
+
+  .introTitle {
+    font-size: clamp(36px, 4vw, 52px);
+  }
+
+  .introSubtitle {
+    font-size: 18px;
+  }
+
+  .introPagination {
+    margin-top: 72px;
+  }
+}
