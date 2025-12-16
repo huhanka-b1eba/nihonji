@@ -53,7 +53,8 @@
     "loading": "Загрузка",
     "showAll": "Показать все",
     "filter": "Фильтр",
-    "filters": "Фильтры"
+    "filters": "Фильтры",
+    "search": "Поиск"
   },
 
   "header": {

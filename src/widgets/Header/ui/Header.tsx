@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { LogOut, Minimize, Search, User } from "lucide-react";
+import {LogOut, Menu, Minimize, Search, User, X} from "lucide-react";
 import { useAuth } from "app/providers/auth/AuthProvider.tsx";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ const Header = () => {
   const { user, logout } = useAuth();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { t } = useTranslation();
 
   const modalRef = useRef<HTMLDivElement>(null);
@@ -36,6 +37,18 @@ const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [open]);
 
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
   const handleNavigateToProfile = () => {
     setOpen(false);
     navigate("/profile");
@@ -47,7 +60,7 @@ const Header = () => {
   };
 
   return (
-    <div className={cls.header}>
+    <header className={cls.header}>
       <div className={cls.headerInner}>
         <div>
           <div className={cls.left}>
@@ -75,6 +88,12 @@ const Header = () => {
             <LangSwitcher className={cls.toggleLang} />
             <ThemeSwitcher className={cls.toggleTheme} />
           </div>
+          <button
+              className={cls.burger}
+              onClick={() => setMobileMenuOpen(true)}
+          >
+            <Menu />
+          </button>
           {user && (
             <>
               <div
@@ -100,7 +119,64 @@ const Header = () => {
           )}
         </div>
       </div>
-    </div>
+      {mobileMenuOpen && (
+          <div
+              className={cls.mobileOverlay}
+              onClick={() => setMobileMenuOpen(false)}
+          >
+            <div
+                className={cls.mobileModal}
+                onClick={(e) => e.stopPropagation()}
+            >
+              {/* Header */}
+              <div className={cls.mobileHeader}>
+                <h2>Menu</h2>
+                <button
+                    className={cls.closeBtn}
+                    onClick={() => setMobileMenuOpen(false)}
+                >
+                  <X />
+                </button>
+              </div>
+
+              <nav className={cls.mobileNav}>
+                <Link to="/novelty" onClick={() => setMobileMenuOpen(false)}>
+                  {t("header.links.novelty")}
+                </Link>
+
+                <Link to="/popular" onClick={() => setMobileMenuOpen(false)}>
+                  {t("header.links.popular")}
+                </Link>
+
+                <Link to="/catalog" onClick={() => setMobileMenuOpen(false)}>
+                  {t("header.links.catalog")}
+                </Link>
+
+                <Link to="/search" onClick={() => setMobileMenuOpen(false)}>
+                  <span>{t("common.search")}</span>
+                </Link>
+
+                {user && (
+                    <button className={cls.mobileButton} onClick={handleNavigateToProfile}>
+                      <span>{t("header.profile")}</span>
+                    </button>
+                )}
+              </nav>
+
+              <div className={cls.mobileSystem}>
+                <LangSwitcher className={cls.toggleLang} />
+                <ThemeSwitcher />
+
+                {user && (
+                    <button onClick={handleLogout} className={cls.logout}>
+                      <LogOut />
+                    </button>
+                )}
+              </div>
+            </div>
+          </div>
+      )}
+    </header>
   );
 };
 
