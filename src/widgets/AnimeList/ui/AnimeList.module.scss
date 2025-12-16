@@ -1,0 +1,19 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  gap: clamp(16px, 4vw, 48px);
+}
+
+.grid > a,
+.grid > div {
+  flex: 0 1 clamp(140px, 18vw, 180px);
+}

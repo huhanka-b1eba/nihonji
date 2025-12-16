@@ -1,0 +1,237 @@
+.ProfilePage {
+  background: #050609;
+  color: #fff;
+  min-height: 100vh;
+  font-family: var(--font-family-main);
+  box-sizing: border-box;
+}
+
+/* container same as anime page */
+.container {
+  width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* hero with waves */
+.hero {
+  position: relative;
+  height: 360px;
+  overflow: visible;
+  margin-bottom: 28px;
+}
+
+.heroBg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image:
+    linear-gradient(180deg, rgb(5 6 9 / 95%) 0%, rgb(5 6 9 / 98%) 25%, rgb(5 6 9 / 100%) 100%),
+    url("https://cdn.shopify.com/s/files/1/0657/3100/2634/files/petites-arches-3_59923a83-a29d-4a56-9b6e-498538dc4f74.png?v=1730983516");
+  background-repeat: repeat;
+  filter: brightness(var(--bg-brightness));
+  background-size: 2000px auto;
+  background-position: 0 0;
+  opacity: 0.95;
+  animation: waveMove 14s linear infinite;
+}
+
+@keyframes waveMove {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 600px 0;
+  }
+}
+
+.heroPanel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -20px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* profile card */
+.profileCard {
+  width: 100%;
+  max-width: 980px;
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+/* left block */
+.leftBlock {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin: 0;
+  font-size: 36px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.emailRow {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 40px;
+  color: rgb(255 255 255 / 85%);
+  font-size: 24px;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.85;
+}
+
+.email {
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.verified,
+.notVerified {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 3%);
+}
+
+.verifiedIcon {
+  color: #66ffb3;
+}
+
+.notVerifiedIcon {
+  color: #ff6b81;
+}
+
+/* actions */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.ghostBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 9px;
+  border: 1px dashed rgb(255 255 255 / 4%);
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.logoutBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border-radius: 5px;
+  border: none;
+  background: red;
+  color: #fff;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.btnIcon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.95;
+}
+
+.message {
+  margin-top: 6px;
+  padding: 6px 8px;
+  background: rgb(255 255 255 / 2%);
+  border-radius: 8px;
+  color: #ffd1e0;
+  font-size: 13px;
+}
+
+.centerCard {
+  width: 100%;
+  max-width: 640px;
+  padding: 28px;
+  text-align: center;
+  background: rgb(255 255 255 / 2%);
+  border-radius: 10px;
+  color: rgb(255 255 255 / 85%);
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+  width: 14px;
+  height: 14px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* responsive */
+@media (width <= 720px) {
+  .hero {
+    height: 500px;
+  }
+
+  .profileCard {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .actions {
+    align-items: center;
+    width: 100%;
+  }
+
+  .leftBlock {
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .container {
+    width: 100%;
+    padding: 0 14px;
+  }
+}

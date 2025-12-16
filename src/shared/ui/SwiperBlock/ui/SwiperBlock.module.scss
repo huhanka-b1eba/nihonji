@@ -1,0 +1,75 @@
+.navBtn {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  width: 48px;
+  height: 48px;
+  z-index: 30;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible; /* разрешаем тени расширяться визуально */
+}
+
+.navBtn::after {
+  content: "";
+  position: absolute;
+  inset: 0; /* занимает только зону кнопки */
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+
+  /* создаём тень, которая визуально "уходит" наружу */
+  filter: blur(40px);
+}
+
+/* направленные градиенты */
+.prevBtn::after {
+  background: linear-gradient(to right, rgb(0 0 0 / 60%), rgb(0 0 0 / 0%));
+}
+
+.nextBtn::after {
+  background: linear-gradient(to left, rgb(0 0 0 / 60%), rgb(0 0 0 / 0%));
+}
+
+.navBtn:hover::after {
+  opacity: 0.9;
+}
+
+.prevBtn::before,
+.nextBtn::before {
+  content: "";
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-top: 3px solid #fff;
+  border-right: 3px solid #fff;
+  transition: all 0.2s linear;
+}
+
+.prevBtn::before {
+  transform: rotate(-135deg);
+}
+
+.nextBtn::before {
+  transform: rotate(45deg);
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-10px);
+}
+
+.prevBtn {
+  left: 10px;
+}
+
+.nextBtn {
+  right: 10px;
+}

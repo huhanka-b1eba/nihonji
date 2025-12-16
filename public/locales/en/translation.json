@@ -1,0 +1,250 @@
+{
+  "general": {
+    "lang": "EN"
+  },
+
+  "intro": {
+    "hello": "Anime for every day",
+    "subtitle": "Your personal anime guide: discover titles by mood, genre, rating, and recommendations. Something new every day."
+  },
+
+  "home": {
+    "error": "An error occurred while loading data."
+  },
+
+  "sections": {
+    "popularSeason": "Popular This Season",
+    "popularAllTime": "All-Time Favorites"
+  },
+
+  "novelty": {
+    "title": "Ongoings",
+
+    "sort": {
+      "oldFirst": "Oldest first",
+      "newFirst": "Newest first"
+    },
+
+    "error": "Failed to load ongoing anime. Please try again later.",
+
+    "loading": {
+      "default": "Loading...",
+      "fetching": "Loading more..."
+    },
+
+    "loadMore": "Load more",
+    "end": "All available results are shown."
+  },
+
+  "news": {
+    "title": "Nihonji News",
+    "viewAll": "View all →",
+    "loading": "Loading...",
+    "pageTitle": "News",
+    "error": "Failed to load news. Please try again later.",
+    "empty": "No news yet.",
+    "noDescription": "No description.",
+    "readMore": "Read more →"
+  },
+
+  "common": {
+    "loading": "Loading",
+    "showAll": "Show all",
+    "filter": "Filter",
+    "filters": "Filters",
+    "search": "Search"
+  },
+
+  "header": {
+    "links": {
+      "novelty": "Ongoings",
+      "popular": "Popular",
+      "catalog": "Catalog"
+    },
+    "profile": "Profile",
+    "logout": "Log out"
+  },
+
+  "footer": {
+    "description": "An anime guide for every day. Best collections, new releases, and recommendations.",
+    "nav": {
+      "home": "Home",
+      "catalog": "Catalog"
+    }
+  },
+
+  "popular": {
+    "title": "Popular",
+
+    "sort": {
+      "most": "Most popular first",
+      "least": "Least popular first"
+    },
+
+    "error": "Failed to load popular anime.",
+    "end": "All available results are shown."
+  },
+
+  "catalog": {
+    "title": "Anime Catalog",
+
+    "sort": {
+      "placeholder": "Sort by",
+      "popularity": "By popularity",
+      "score": "By rating",
+      "rank": "By top rank",
+      "favorites": "By favorites"
+    },
+
+    "search": {
+      "placeholder": "Search anime..."
+    },
+
+    "error": "Failed to load catalog.",
+    "end": "All results are shown."
+  },
+
+  "search": {
+    "title": "Anime Search",
+
+    "input": {
+      "placeholder": "Enter a title (e.g. Naruto, One Piece)..."
+    },
+
+    "hint": "Enter a search query — results will appear here.",
+
+    "noResults": "No results found.",
+
+    "loading": {
+      "default": "Loading...",
+      "fetching": "Loading more..."
+    },
+
+    "loadMore": "Load more",
+
+    "error": "Failed to load results. Please refresh the page."
+  },
+  "animeDetail": {
+    "error": "Failed to load data. Please try again later.",
+    "noDescription": "Description is not available.",
+
+    "tabs": {
+      "overview": "Overview",
+      "characters": "Characters",
+      "staff": "Staff"
+    },
+
+    "metrics": {
+      "popular": "Most Popular",
+      "rated": "Highest Rated"
+    },
+
+    "info": {
+      "airing": "Airing",
+      "duration": "Duration",
+      "source": "Source",
+      "seasonYear": "Season / Year",
+      "aired": "Aired",
+      "broadcast": "Broadcast",
+      "rating": "Rating",
+      "genres": "Genres",
+      "studios": "Studios",
+      "producers": "Producers"
+    },
+
+    "sections": {
+      "pictures": "Pictures",
+      "characters": "Characters",
+      "staff": "Staff",
+      "allCharacters": "All Characters",
+      "allStaff": "All Staff",
+      "trailer": "Trailer"
+    },
+
+    "fallbacks": {
+      "noPreview": "No preview",
+      "noPictures": "No pictures available.",
+      "noCharacters": "No characters available.",
+      "noStaff": "No staff available."
+    },
+
+    "trailer": {
+      "watch": "Watch trailer"
+    },
+
+    "modal": {
+      "close": "Close image",
+      "imageAlt": "image"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in",
+      "submit": "Sign in",
+      "switch": "Don’t have an account? Sign up"
+    },
+    "register": {
+      "title": "Sign up",
+      "submit": "Sign up",
+      "switch": "Already have an account?"
+    }
+  },
+  "authForm": {
+    "fields": {
+      "email": {
+        "label": "Email",
+        "placeholder": "you@example.com"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "At least 8 characters"
+      },
+      "confirm": {
+        "label": "Confirm password",
+        "placeholder": "Enter password again"
+      }
+    },
+
+    "errors": {
+      "emailRequired": "Please enter an email",
+      "passwordLength": "Password must be at least 8 characters long",
+      "passwordMismatch": "Passwords do not match",
+      "emailExists": "This email is already registered",
+      "invalidEmail": "Invalid email address"
+    },
+
+    "submit": {
+      "login": "Sign in",
+      "register": "Sign up",
+      "loadingLogin": "Signing in...",
+      "loadingRegister": "Creating account..."
+    }
+  },
+  "profile": {
+    "notAuthorized": "You are not signed in.",
+
+    "status": {
+      "verified": "Verified",
+      "notVerified": "Not verified"
+    },
+
+    "verification": {
+      "send": "Send verification",
+      "sending": "Sending...",
+      "check": "Check now",
+      "checking": "Checking..."
+    },
+
+    "messages": {
+      "userNotFound": "User not found.",
+      "emailSent": "Verification email has been sent. Please check your spam folder.",
+      "emailVerified": "Email is verified.",
+      "emailNotVerified": "Email is still not verified.",
+      "sendError": "Error while sending email",
+      "checkError": "Error while checking",
+      "logoutError": "Error while logging out"
+    },
+
+    "logout": "Log out"
+  }
+}

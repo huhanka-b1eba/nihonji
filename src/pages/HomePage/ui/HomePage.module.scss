@@ -1,0 +1,80 @@
+.homePage {
+  position: relative;
+  min-height: 100vh;
+}
+
+.section {
+  padding: 80px 0;
+  position: relative;
+  z-index: 5;
+}
+
+.animeGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 28px;
+}
+
+.animeCard {
+  background: rgb(255 255 255 / 4%);
+  border: 1px solid rgb(255 255 255 / 5%);
+  border-radius: 18px;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgb(0 0 0 / 45%);
+    border: 1px solid rgb(255 255 255 / 12%);
+  }
+}
+
+.animeImg {
+  width: 100%;
+  padding-top: 150%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: brightness(0.9);
+  transition: filter 0.3s ease;
+
+  .animeCard:hover & {
+    filter: brightness(1.05);
+  }
+}
+
+.animeInfo {
+  padding: 16px 18px;
+}
+
+.animeName {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.animeRating {
+  color: rgb(255 255 255 / 80%);
+  font-size: 15px;
+}
+
+.upper {
+  position: relative;
+  z-index: 20;
+  transform: translateY(-160px);
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+}

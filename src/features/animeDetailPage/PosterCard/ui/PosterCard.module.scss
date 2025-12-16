@@ -1,0 +1,211 @@
+.posterCard {
+  width: 240px;
+  margin-top: -120px;
+  margin-bottom: 20px;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.poster {
+  width: 240px;
+  height: 340px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid rgb(255 255 255 / 6%);
+  box-shadow: 0 18px 40px rgb(0 0 0 / 60%);
+}
+
+.placeholder {
+  width: 240px;
+  height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(255 255 255 / 3%);
+  border-radius: 6px;
+  color: rgb(255 255 255 / 70%);
+}
+
+.actions {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.like {
+  background: #ff6b8a;
+  color: #fff;
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.posterCard {
+  width: 240px;
+  margin-top: -120px;
+  margin-bottom: 20px;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.poster {
+  width: 240px;
+  height: 340px;
+  object-fit: cover;
+  border-radius: 3px;
+  border: 1px solid rgb(255 255 255 / 6%);
+  box-shadow: 0 18px 40px rgb(0 0 0 / 60%);
+  display: block;
+}
+
+.placeholder {
+  width: 240px;
+  height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(255 255 255 / 2%);
+  border-radius: 3px;
+  color: rgb(255 255 255 / 60%);
+}
+
+.actions {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.like {
+  background: #ff6b8a;
+  color: #fff;
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 3px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.like svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+  stroke-width: 2.2;
+  transition:
+    transform 0.25s ease,
+    fill 0.25s ease,
+    stroke 0.25s ease;
+}
+
+.liked {
+  background: #ff3d6e;
+  box-shadow: 0 0 12px rgb(255 61 110 / 60%);
+  transform: scale(1.06);
+}
+
+.liked svg {
+  fill: #fff;
+  stroke: #fff;
+  transform: scale(1);
+}
+
+.liked {
+  animation: likedPulse 0.6s ease forwards;
+}
+
+@keyframes likedPulse {
+  0% {
+    transform: scale(1);
+  }
+
+  40% {
+    transform: scale(1.22);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.zoomContainer {
+  position: relative;
+  display: inline-block;
+  cursor: zoom-in;
+  overflow: visible;
+}
+
+.zoomUpper {
+  position: relative;
+  display: inline-block;
+  overflow: visible;
+  will-change: transform;
+  transition:
+    transform 420ms cubic-bezier(0.2, 0.9, 0.2, 1),
+    box-shadow 320ms ease;
+  z-index: 60;
+}
+
+.zoomUpper::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -8px;
+  transform: translate(-50%, 0);
+  width: 72%;
+  height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgb(0 0 0 / 38%) 0%,
+    rgb(0 0 0 / 18%) 40%,
+    rgb(0 0 0 / 0%) 70%
+  );
+  filter: blur(14px);
+  opacity: 0.95;
+  transition:
+    transform 420ms cubic-bezier(0.2, 0.9, 0.2, 1),
+    opacity 300ms ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.zoomOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgb(0 0 0 / 35%);
+  opacity: 0;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  border-radius: 6px;
+  z-index: 5;
+}
+
+.zoomContainer:hover .zoomOverlay {
+  opacity: 1;
+}

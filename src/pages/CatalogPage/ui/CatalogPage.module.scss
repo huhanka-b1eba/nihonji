@@ -1,0 +1,48 @@
+.CatalogPage {
+  padding: 125px 0 40px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.searchInput {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid rgb(255 255 255 / 15%);
+  background: rgb(255 255 255 / 5%);
+  color: #fff;
+}
+
+.select {
+  padding: 10px 14px;
+  border-radius: 6px;
+  background: rgb(255 255 255 / 5%);
+  border: 1px solid rgb(255 255 255 / 15%);
+  color: #fff;
+}
+
+.error {
+  color: #f55;
+  margin-top: 20px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.endMessage {
+  text-align: center;
+  padding: 20px;
+  opacity: 0.7;
+}

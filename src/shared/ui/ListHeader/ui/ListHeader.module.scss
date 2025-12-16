@@ -1,0 +1,304 @@
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  font-family: var(--font-family-secondary);
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+
+  @media (width <= 600px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+}
+
+.controls {
+  font-family: var(--font-family-secondary);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.controlItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: 0.25s ease;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  span {
+    color: #eaeaea;
+  }
+
+  &:hover {
+    background: rgb(255 255 255 / 14%);
+  }
+}
+
+.filterOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 55%);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+}
+
+.filterModal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: min(680px, 100vw);
+  max-width: 100%;
+  background: var(--bg-color);
+  padding: 100px 24px 32px;
+  box-shadow: -10px 0 40px rgb(var(--bg-color-rgb) / var(--bg-shadow-opacity));
+  animation: slideIn 0.25s ease forwards;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+
+  h2 {
+    font-size: 36px;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgb(180 86 255 / 35%);
+  }
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 22px;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    color: #fff;
+    transform: rotate(90deg);
+  }
+}
+
+.section {
+  margin-bottom: 28px;
+}
+
+.sectionTitle {
+  display: block;
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 30px;
+  letter-spacing: 0.08em;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.option {
+  position: relative;
+  cursor: pointer;
+
+  input {
+    display: none;
+  }
+
+  span {
+    min-width: 96px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 14px;
+    font-size: 14px;
+    text-transform: uppercase;
+    border-radius: 6px;
+    background: transparent;
+    border: 1px solid rgb(255 255 255 / 14%);
+    transition: 0.25s ease;
+    color: #eaeaea;
+  }
+
+  &:hover span {
+    background: rgb(255 255 255 / 14%);
+  }
+
+  input:checked + span {
+    background: rgb(255 255 255 / 20%);
+    border-color: rgb(255 255 255 / 20%);
+  }
+}
+
+.footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.reset,
+.apply {
+  flex: 1;
+  padding: 20px 0;
+  font-size: 18px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.reset {
+  background: transparent;
+  border: 1px solid rgb(255 255 255 / 20%);
+  color: #aaa;
+
+  &:hover {
+    color: #fff;
+    border-color: #fff;
+  }
+}
+
+.apply {
+  background: #ff9f43;
+  border: none;
+  color: #fff;
+
+  &:hover {
+    filter: brightness(1.15);
+  }
+}
+
+@media (width <= 1520px) {
+  .title {
+    font-size: 28px;
+  }
+
+  .header h2 {
+    font-size: 32px;
+  }
+
+  .filterModal {
+    width: 560px;
+    padding: 125px 20px 28px;
+  }
+}
+
+@media (width <= 1200px) {
+  .controls {
+    gap: 14px;
+  }
+
+  .controlItem {
+    font-size: 16px;
+    padding: 6px 12px;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  .filterModal {
+    width: 480px;
+  }
+}
+
+@media (width <= 900px) {
+  .title {
+    font-size: 24px;
+  }
+
+  .header h2 {
+    font-size: 28px;
+  }
+
+  .sectionTitle {
+    font-size: 16px;
+    margin-bottom: 18px;
+  }
+
+  .filterModal {
+    width: 100%;
+    padding: 100px 16px 24px;
+  }
+
+  .footer {
+    flex-direction: column;
+  }
+
+  .reset,
+  .apply {
+    padding: 16px 0;
+    font-size: 16px;
+  }
+}
+
+@media (width <= 600px) {
+  .title {
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+
+  .controls {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .controlItem {
+    font-size: 14px;
+    padding: 6px 10px;
+
+    span {
+      display: none; // оставляем только иконки
+    }
+  }
+
+  .header {
+    margin-bottom: 20px;
+
+    h2 {
+      font-size: 24px;
+    }
+  }
+
+  .options {
+    gap: 8px;
+  }
+
+  .option span {
+    min-width: unset;
+    height: 40px;
+    font-size: 12px;
+    padding: 0 10px;
+  }
+}

@@ -1,0 +1,227 @@
+.Intro {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  font-family: var(--font-family-secondary);
+}
+
+.introMask {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background:
+    linear-gradient(to right, rgb(0 0 0 / 40%), rgb(0 0 0 / 0%)),
+    /* затемнение сверху → вниз */ linear-gradient(to top, rgb(0 0 0 / 100%), rgb(0 0 0 / 0%)),
+    /* твой радиальный градиент */
+    radial-gradient(circle at center, rgb(0 0 0 / 0%) 0%, rgb(0 0 0 / 50%) 100%);
+}
+
+.introContent {
+  position: relative;
+  z-index: 22;
+  max-width: 700px;
+}
+
+.introTitle {
+  font-size: clamp(32px, 5vw, 64px);
+  line-height: 1.2;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 4px 24px rgb(0 0 0 / 60%);
+}
+
+.introSubtitle {
+  margin-top: 20px;
+  font-size: clamp(16px, 2.2vw, 20px);
+  color: rgb(255 255 255 / 85%);
+  max-width: 600px;
+  line-height: 1.5;
+}
+
+.introActions {
+  margin-top: 32px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+// TODO: Исправить
+.bgSwiper {
+  position: absolute !important;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.bgWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.bgSlide {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+.navBtn {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  width: 48px;
+  height: 48px;
+  z-index: 30;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s linear;
+}
+
+.prevBtn {
+  left: 10px;
+}
+
+.nextBtn {
+  right: 10px;
+}
+
+.prevBtn::before,
+.nextBtn::before {
+  content: "";
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-top: 5px solid #fff;
+  border-right: 5px solid #fff;
+  margin: 0 auto;
+  transition: all 0.2s linear;
+}
+
+.prevBtn::before {
+  transform: rotate(-135deg);
+}
+
+.nextBtn::before {
+  transform: rotate(45deg);
+}
+
+.navBtn:hover {
+  opacity: 0.8;
+}
+
+.introPagination {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 100px;
+
+  :global(.swiper-pagination-bullet) {
+    width: 50px;
+    height: 14px;
+    background: #fff;
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.3s ease;
+
+    &:hover {
+      background: rgb(255 255 255 / 70%);
+    }
+  }
+
+  :global(.swiper-pagination-bullet-active) {
+    background: rgb(255 255 255 / 50%);
+    width: 100px;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: #fff;
+      transform: scaleX(0);
+      transform-origin: left;
+      animation: slide-progress 5s linear forwards;
+    }
+  }
+}
+
+@keyframes slide-progress {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (max-width: 1520px) {
+  .introContent {
+    max-width: 650px;
+    padding: 0 80px;
+  }
+
+  .introTitle {
+    font-size: clamp(36px, 4vw, 52px);
+  }
+
+  .introSubtitle {
+    font-size: 18px;
+  }
+
+  .introPagination {
+    margin-top: 72px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navBtn {
+    display: none;
+  }
+
+  .introContent {
+    max-width: 100%;
+    padding: 0 20px;
+  }
+
+  .introTitle {
+    font-size: 28px;
+    line-height: 1.15;
+  }
+
+  .introSubtitle {
+    margin-top: 14px;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .introPagination {
+    margin-top: 40px;
+    gap: 6px;
+
+    :global(.swiper-pagination-bullet) {
+      width: 24px;
+      height: 6px;
+      border-radius: 6px;
+    }
+
+    :global(.swiper-pagination-bullet-active) {
+      width: 48px;
+    }
+  }
+}
+

@@ -1,0 +1,20 @@
+:root {
+  --font-family-main: "Roboto", sans-serif;
+  --font-family-secondary: "Montserrat", sans-serif;
+  --font-size-m: 16px;
+  --font-line-m: 24px;
+  --font-m: var(--font-size-m) / var(--font-line-m) var(--font-family-main);
+  --font-size-l: 24px;
+  --font-line-l: 32px;
+  --font-l: var(--font-size-l) / var(--font-line-l) var(--font-family-main);
+
+  /* Container widths */
+  --container-max-2xl: 1720px;
+  --container-max-xl: 1440px;
+  --container-max-lg: 1280px;
+  --container-max-md: 1024px;
+
+  /* Gutter */
+  --container-padding-desktop: 24px;
+  --container-padding-mobile: 16px;
+}

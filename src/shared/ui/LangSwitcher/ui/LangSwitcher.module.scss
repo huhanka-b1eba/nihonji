@@ -1,0 +1,13 @@
+.LangSwitcher {
+  border-radius: 8px;
+  background: rgb(255 255 255 / 10%);
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+
+  &:hover {
+    background: rgb(255 255 255 / 20%);
+  }
+}
