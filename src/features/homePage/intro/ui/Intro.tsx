@@ -9,7 +9,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { useRef, useState, useEffect } from "react";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 interface IntroProps {
   className?: string;
@@ -76,9 +76,7 @@ export const Intro = ({ className }: IntroProps) => {
         <div className={cls.introContent}>
           <h1 className={cls.introTitle}>{t("intro.hello")} — Nihonji</h1>
 
-          <p className={cls.introSubtitle}>
-            {t("intro.subtitle")}
-          </p>
+          <p className={cls.introSubtitle}>{t("intro.subtitle")}</p>
 
           <div ref={paginationRef} className={cls.introPagination} />
         </div>

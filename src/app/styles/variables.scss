@@ -8,9 +8,13 @@
   --font-line-l: 32px;
   --font-l: var(--font-size-l) / var(--font-line-l) var(--font-family-main);
 
-  // Размеры
-  --header-height: 50px;
-  --container-height-2xl: 1730px;
-  --container-height-xl: 1430px;
-  --container-height-ml: 1730px;
+  /* Container widths */
+  --container-max-2xl: 1720px;
+  --container-max-xl: 1440px;
+  --container-max-lg: 1280px;
+  --container-max-md: 1024px;
+
+  /* Gutter */
+  --container-padding-desktop: 24px;
+  --container-padding-mobile: 16px;
 }

@@ -3,7 +3,7 @@ import { ArrowDownWideNarrow, ArrowUpWideNarrow, SlidersHorizontal } from "lucid
 import { useEffect, useRef, useState } from "react";
 import { type GetAnimeArgs } from "entities/anime/api/animeApi.ts";
 import cls from "./ListHeader.module.scss";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 type SortDir = "asc" | "desc";
 

@@ -3,13 +3,17 @@
   flex-direction: column;
   gap: 20px;
 
-  .AnimeCard {
-    width: 150px;
-  }
 }
 
 .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 100px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  gap: clamp(16px, 4vw, 48px);
+}
+
+.grid > a,
+.grid > div {
+  flex: 0 1 clamp(140px, 18vw, 180px);
 }

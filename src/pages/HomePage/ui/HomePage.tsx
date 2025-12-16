@@ -7,7 +7,7 @@ import { News } from "features/homePage/news";
 import { useGetAnimeQuery } from "entities/anime/api/animeApi";
 import { Loader } from "shared/ui/Loader";
 import cls from "./HomePage.module.scss";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 const HomePage: React.FC = () => {
   const { t } = useTranslation();

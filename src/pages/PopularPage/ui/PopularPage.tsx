@@ -3,10 +3,9 @@ import { classNames } from "shared/lib/classNames/classNames";
 import { AnimeList } from "widgets/AnimeList";
 import { ListHeader } from "shared/ui/ListHeader";
 import { type GetAnimeArgs, useGetAnimeQuery } from "entities/anime/api/animeApi";
-import { Loader } from "shared/ui/Loader";
 import type { Anime } from "entities/anime/model/anime";
 import cls from "./PopularPage.module.scss";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 interface PopularPageProps {
   className?: string;
@@ -100,36 +99,27 @@ export const PopularPage: React.FC<PopularPageProps> = ({ className }) => {
     <div className={classNames(cls.Popular, {}, [className])}>
       <div className="container">
         <ListHeader
-            title={t("popular.title")}
-            sortName={
-              sortBool === "desc"
-                  ? t("popular.sort.most")
-                  : t("popular.sort.least")
-            }
-            sortBool={sortBool}
-            setSortBool={setSortBool}
-            onApply={setFilters}
-            value={filters}
+          title={t("popular.title")}
+          sortName={sortBool === "desc" ? t("popular.sort.most") : t("popular.sort.least")}
+          sortBool={sortBool}
+          setSortBool={setSortBool}
+          onApply={setFilters}
+          value={filters}
         />
 
-        {error && allItems.length === 0 && (
-            <div className={cls.error}>{t("popular.error")}</div>
-        )}
-
+        {error && allItems.length === 0 && <div className={cls.error}>{t("popular.error")}</div>}
 
         <AnimeList
-            items={allItems}
-            isLoading={isLoading}
-            skeletonCount={12}
-            emptyText={t("catalog.empty")}
+          items={allItems}
+          isLoading={isLoading}
+          skeletonCount={12}
+          emptyText={t("catalog.empty")}
         />
 
         <div ref={sentinelRef} style={{ height: 1 }} />
 
         {!isLoading && !hasMore && allItems.length > 0 && (
-            <div className={cls.endMessage}>
-              {t("popular.end")}
-            </div>
+          <div className={cls.endMessage}>{t("popular.end")}</div>
         )}
       </div>
     </div>

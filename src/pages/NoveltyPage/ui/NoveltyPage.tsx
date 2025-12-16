@@ -6,7 +6,7 @@ import { type GetAnimeArgs, useGetAnimeQuery } from "entities/anime/api/animeApi
 import { Loader } from "shared/ui/Loader";
 import type { Anime } from "entities/anime/model/anime";
 import cls from "./NoveltyPage.module.scss";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 interface NoveltyPageProps {
   className?: string;
@@ -128,56 +128,37 @@ export const NoveltyPage: React.FC<NoveltyPageProps> = ({ className }) => {
     <div className={classNames(cls.NoveltyPage, {}, [className])}>
       <div className="container">
         <ListHeader
-            title={t("novelty.title")}
-            sortName={
-              sortBool === "asc"
-                  ? t("novelty.sort.oldFirst")
-                  : t("novelty.sort.newFirst")
-            }
-            sortBool={sortBool}
-            setSortBool={setSortBool}
-            onApply={setFilters}
-            value={filters}
+          title={t("novelty.title")}
+          sortName={sortBool === "asc" ? t("novelty.sort.oldFirst") : t("novelty.sort.newFirst")}
+          sortBool={sortBool}
+          setSortBool={setSortBool}
+          onApply={setFilters}
+          value={filters}
         />
 
-
-
-        {error && allItems.length === 0 && (
-            <div className={cls.error}>{t("novelty.error")}</div>
-        )}
-
+        {error && allItems.length === 0 && <div className={cls.error}>{t("novelty.error")}</div>}
 
         {allItems.length > 0 && <AnimeList items={allItems} />}
 
         <AnimeList
-            items={allItems}
-            isLoading={isLoading}
-            skeletonCount={12}
-            emptyText={t("catalog.empty")}
+          items={allItems}
+          isLoading={isLoading}
+          skeletonCount={12}
+          emptyText={t("catalog.empty")}
         />
-
-
 
         <div ref={sentinelRef} style={{ height: 1, width: "100%" }} />
 
         {!isLoading && allItems.length > 0 && hasMore && (
           <div className={cls.loadMoreWrap}>
-            <button
-                className={cls.loadMoreBtn}
-                onClick={handleLoadMore}
-                disabled={isFetching}
-            >
-              {isFetching
-                  ? t("novelty.loading.fetching")
-                  : t("novelty.loadMore")}
+            <button className={cls.loadMoreBtn} onClick={handleLoadMore} disabled={isFetching}>
+              {isFetching ? t("novelty.loading.fetching") : t("novelty.loadMore")}
             </button>
           </div>
         )}
 
         {!isLoading && !hasMore && allItems.length > 0 && (
-            <div className={cls.endMessage}>
-              {t("novelty.end")}
-            </div>
+          <div className={cls.endMessage}>{t("novelty.end")}</div>
         )}
       </div>
     </div>

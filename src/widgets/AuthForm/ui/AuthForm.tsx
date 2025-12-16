@@ -3,7 +3,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Input } from "shared/ui/Input";
 import cls from "./AuthForm.module.scss";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 interface AuthFormProps {
   mode?: "register" | "login";
@@ -37,18 +37,14 @@ export const AuthForm: React.FC<AuthFormProps> = ({
     if (mode === "register" && password !== confirm)
       return setError(t("authForm.errors.passwordMismatch"));
 
-
     setLoading(true);
     try {
       await onSubmit({ email, password, confirm });
     } catch (err: any) {
       const msg = String(err?.message ?? err);
-      if (msg.includes("email-already"))
-        setError(t("authForm.errors.emailExists"));
-      else if (msg.includes("invalid-email"))
-        setError(t("authForm.errors.invalidEmail"));
-      else
-        setError(msg);
+      if (msg.includes("email-already")) setError(t("authForm.errors.emailExists"));
+      else if (msg.includes("invalid-email")) setError(t("authForm.errors.invalidEmail"));
+      else setError(msg);
     } finally {
       setLoading(false);
     }
@@ -57,21 +53,21 @@ export const AuthForm: React.FC<AuthFormProps> = ({
   return (
     <form className={cls.form} onSubmit={handleSubmit}>
       <Input
-          label={t("authForm.fields.email.label")}
-          type="email"
-          value={email}
-          placeholder={t("authForm.fields.email.placeholder")}
-          onChange={(e) => setEmail(e.target.value)}
+        label={t("authForm.fields.email.label")}
+        type="email"
+        value={email}
+        placeholder={t("authForm.fields.email.placeholder")}
+        onChange={(e) => setEmail(e.target.value)}
       />
 
       <div className={cls.field}>
         <label>{t("authForm.fields.password.label")}</label>
         <div className={cls.passwordRow}>
           <input
-              type={showPassword ? "text" : "password"}
-              value={password}
-              placeholder={t("authForm.fields.password.placeholder")}
-              onChange={(e) => setPassword(e.target.value)}
+            type={showPassword ? "text" : "password"}
+            value={password}
+            placeholder={t("authForm.fields.password.placeholder")}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <button type="button" className={cls.showBtn} onClick={() => setShowPassword((s) => !s)}>
             {showPassword ? <EyeOff /> : <Eye />}
@@ -83,10 +79,10 @@ export const AuthForm: React.FC<AuthFormProps> = ({
         <div className={cls.field}>
           <label>{t("authForm.fields.confirm.label")}</label>
           <input
-              type="password"
-              value={confirm}
-              placeholder={t("authForm.fields.confirm.placeholder")}
-              onChange={(e) => setConfirm(e.target.value)}
+            type="password"
+            value={confirm}
+            placeholder={t("authForm.fields.confirm.placeholder")}
+            onChange={(e) => setConfirm(e.target.value)}
           />
         </div>
       )}
@@ -95,12 +91,12 @@ export const AuthForm: React.FC<AuthFormProps> = ({
 
       <button className={cls.submit} type="submit" disabled={loading}>
         {loading
-            ? mode === "register"
-                ? t("authForm.submit.loadingRegister")
-                : t("authForm.submit.loadingLogin")
-            : mode === "register"
-                ? t("authForm.submit.register")
-                : t("authForm.submit.login")}
+          ? mode === "register"
+            ? t("authForm.submit.loadingRegister")
+            : t("authForm.submit.loadingLogin")
+          : mode === "register"
+            ? t("authForm.submit.register")
+            : t("authForm.submit.login")}
       </button>
 
       {switchLink && (
@@ -111,4 +107,3 @@ export const AuthForm: React.FC<AuthFormProps> = ({
     </form>
   );
 };
-
