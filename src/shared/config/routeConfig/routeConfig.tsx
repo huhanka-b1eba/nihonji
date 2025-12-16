@@ -10,6 +10,7 @@ import { LoginPage } from "pages/LoginPage";
 import type { RouteConfig } from "shared/config/routeConfig/types.ts";
 import { ProfilePage } from "pages/ProfilePage";
 import { AppRoutes, routePaths } from "./routes.ts";
+import {NotFoundPage} from "pages/NotFoundPage";
 
 export const routeConfig: RouteConfig = {
   [AppRoutes.HOME]: {
@@ -69,4 +70,9 @@ export const routeConfig: RouteConfig = {
     path: routePaths[AppRoutes.PROFILE],
     element: <ProfilePage />,
   },
+  [AppRoutes.NOT_FOUND]: {
+    routeKey: AppRoutes.NOT_FOUND,
+    path: routePaths[AppRoutes.NOT_FOUND],
+    element: <NotFoundPage />,
+  }
 };

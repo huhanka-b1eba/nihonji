@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import {Routes, Route, Navigate} from "react-router-dom";
 import { routeConfig } from "shared/config/routeConfig/routeConfig.tsx";
 import { Suspense } from "react";
 import { Loader } from "shared/ui/Loader";

@@ -36,7 +36,7 @@ interface AnimeDetailPageProps {
 export const AnimeDetailPage: React.FC<AnimeDetailPageProps> = ({ className }) => {
   const { id } = useParams<{ id?: string }>();
 
-  const { data, error, isLoading } = useGetAnimeByIdQuery(id ?? "", { skip: !id });
+  const { data, error } = useGetAnimeByIdQuery(id ?? "", { skip: !id });
   const { data: picturesData } = useGetAnimePictureQuery(id ?? "", { skip: !id });
   const { data: charactersData } = useGetAnimeCharactersQuery(id ?? "", { skip: !id });
   const { data: staffData } = useGetAnimeStaffQuery(id ?? "", { skip: !id });
