@@ -54,6 +54,7 @@ export const AnimeDetailSkeleton = ({ className }: Props) => {
             <Skeleton height={48} />
 
             <ul className={cls.infoList}>
+              {/* супер! так и делают обычно норм разработчики */}
               {Array.from({ length: 8 }).map((_, i) => (
                 <li key={i}>
                   <Skeleton height={14} width="40%" />

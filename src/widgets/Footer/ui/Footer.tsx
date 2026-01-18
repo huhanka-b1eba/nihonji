@@ -23,6 +23,7 @@ export const Footer = ({ className }: FooterProps) => {
             <a href="/catalog">{t("footer.nav.catalog")}</a>
           </nav>
 
+          {/* NOTE: вынесла бы в отдельный массив socialsLinks и проходилась бы по нему, проще добавить новую ссылку в будущем */}
           <div className={cls.socials}>
             <a href="#" aria-label="YouTube">
               YouTube

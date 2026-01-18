@@ -1,3 +1,4 @@
+// NOTE: путь до этой компоненты должен быть features/anime/ui/AddToListButton/AddToListButton.tsx+index.ts+AddToListButton.module.scss
 import React, { useEffect, useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import cls from "./AddToListButton.module.scss";
@@ -8,21 +9,36 @@ type Props = {
 
 type ListStatus = "none" | "watched" | "planned";
 
+const getStatus = (storageKey: string): ListStatus => {
+  try {
+    const saved = localStorage.getItem(storageKey);
+    return (saved === 'watched' || saved === 'planned')
+      ? saved as ListStatus
+      : 'none';
+  } catch (error) {
+    return 'none';
+  }
+};
+
 export const AddToListButton: React.FC<Props> = ({ animeId }) => {
   const storageKey = `myList:${animeId}`;
+
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState<ListStatus>("none");
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem(storageKey);
-      if (saved === "watched" || saved === "planned") setStatus(saved as ListStatus);
-      else setStatus("none");
-    } catch {
-      setStatus("none");
-    }
+    // NOTE: в отдельную утилю можно вынести
+    setStatus(getStatus(storageKey))
+    // try {
+    //   const saved = localStorage.getItem(storageKey);
+    //   if (saved === "watched" || saved === "planned") setStatus(saved);
+    //   else setStatus("none");
+    // } catch {
+    //   setStatus("none");
+    // }
   }, [storageKey]);
 
+  // TODO: буквы не жалеем
   const apply = (s: ListStatus) => {
     try {
       if (s === "none") localStorage.removeItem(storageKey);
@@ -55,6 +71,7 @@ export const AddToListButton: React.FC<Props> = ({ animeId }) => {
         </span>
       </button>
 
+      {/* TODO: Вынести каждую из кнопок в отдельные фичи и подключать там, где нужно. Возможно, в таком случае AddToListButton должен быть не Button, а каким-нибудь CardActions, если здесь несколько фича-действий объединяется просто  */}
       {open && (
         <div className={cls.dropdown} role="menu">
           <button className={cls.item} onClick={() => apply("watched")} role="menuitem">

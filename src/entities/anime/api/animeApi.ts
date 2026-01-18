@@ -7,6 +7,7 @@ import type {
   AnimeStaff,
 } from "../model/anime";
 
+// NOTE: лучше перенести в ./model/types.ts и назвать AnimeParams
 export interface GetAnimeArgs {
   type?: string;
   score?: number;
@@ -24,6 +25,13 @@ export interface GetAnimeArgs {
   q?: string;
 }
 
+// TODO: это должно жить в shared/types
+export type SuccessResponse<TData> = {
+  data: TData;
+  // NOTE: потенциально могут быть еще какие-то поля от бэка, next_page_token в случае пагинации, например
+  // meta: ?;
+};
+
 export const animeApi = jikanApi.injectEndpoints({
   endpoints: (build) => ({
     getAnime: build.query<Anime[], GetAnimeArgs | void>({
@@ -33,6 +41,7 @@ export const animeApi = jikanApi.injectEndpoints({
           params.order_by = "popularity";
         } else {
           Object.entries(args).forEach(([k, v]) => {
+            // TODO: вынеси в отдельную функцию или юзай omitBy из lodash
             if (v !== undefined && v !== null && v !== "") params[k] = v;
           });
         }
@@ -41,7 +50,9 @@ export const animeApi = jikanApi.injectEndpoints({
           params,
         };
       },
-      transformResponse: (resp: any) => resp?.data ?? resp,
+      // NOTE: зачем подключали ts, если везде юзаем any? :)
+      // TODO: заведи SuccessResponse<TypeOfData> в shared и везде юзай его, прокидывая нужный тип data, приведу тут пример
+      transformResponse: (resp: SuccessResponse<Anime[]>) => resp?.data,
     }),
 
     getAnimeById: build.query<Anime, string>({

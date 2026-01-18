@@ -14,6 +14,20 @@ interface NoveltyPageProps {
 
 const PAGE_LIMIT = 24;
 
+// TODO: спокойно можно вынести за компонент, никак не зависит от данных
+const isKids = (a: Anime) => {
+  const raw = (a?.rating ?? "").toString().trim();
+  if (!raw) return false;
+
+  const r = raw.toUpperCase();
+
+  if (/^G(\s|-|$)/.test(r)) return true;
+
+  if (/^PG(\s|-)/.test(r) && !/^PG-13/.test(r)) return true;
+
+  return false;
+};
+
 export const NoveltyPage: React.FC<NoveltyPageProps> = ({ className }) => {
   const [page, setPage] = useState(1);
   const [allItems, setAllItems] = useState<Anime[]>([]);
@@ -55,19 +69,6 @@ export const NoveltyPage: React.FC<NoveltyPageProps> = ({ className }) => {
       return;
     }
 
-    const isKids = (a: any) => {
-      const raw = (a?.rating ?? "").toString().trim();
-      if (!raw) return false;
-
-      const r = raw.toUpperCase();
-
-      if (/^G(\s|-|$)/.test(r)) return true;
-
-      if (/^PG(\s|-)/.test(r) && !/^PG-13/.test(r)) return true;
-
-      return false;
-    };
-
     setAllItems((prev) => {
       const pageItems = (rawData as Anime[]).filter((a) => !isKids(a));
 
@@ -78,8 +79,6 @@ export const NoveltyPage: React.FC<NoveltyPageProps> = ({ className }) => {
       return prev.concat(toAdd);
     });
   }, [rawData, page]);
-
-  console.log(rawData);
 
   const lastFetchedCount = Array.isArray(rawData) ? rawData.length : 0;
   const hasMore = lastFetchedCount === PAGE_LIMIT;

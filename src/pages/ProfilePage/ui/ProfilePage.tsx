@@ -26,9 +26,15 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ className }) => {
       value.charAt(0).toUpperCase() + value.slice(1);
 
   const handleResend = async () => {
-    if (!auth.currentUser) return setMessage(t("profile.messages.userNotFound"));
+    // NOTE: setMessage ничего не возвращает, return лучше отдельной строкой ниже сделать, иначе путаешь ts
+    if (!auth.currentUser) {
+      setMessage(t("profile.messages.userNotFound"));
+      return;
+    }
+
     setMessage(null);
     setLoadingResend(true);
+
     try {
       await sendEmailVerification(auth.currentUser);
       if (auth.currentUser.emailVerified)
@@ -37,15 +43,18 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ className }) => {
         setMessage(t("profile.messages.emailNotVerified"));
     } catch (err: any) {
       setMessage(String(err?.message ?? t("profile.messages.sendError")));
-
     } finally {
       setLoadingResend(false);
     }
   };
 
   const handleCheckNow = async () => {
-    if (!auth.currentUser)
-      return setMessage(t("profile.messages.userNotFound"));
+    // NOTE: setMessage ничего не возвращает, return лучше отдельной строкой ниже сделать, иначе путаешь ts
+    if (!auth.currentUser) {
+      setMessage(t("profile.messages.userNotFound"));
+      return;
+    }
+    
     setMessage(null);
     setLoadingCheck(true);
     try {

@@ -31,7 +31,9 @@ export const NewsPage = ({ className }: NewsPageProps) => {
         )}
 
         <div className={cls.grid}>
+          {/* TODO: ts всё еще плачет */}
           {news.map((n: any) => {
+            // TODO: все подобные урлы привыкаем прятать в константы выше рендера, легко потерять и забыть в верстке
             const img = n.images?.jpg?.image_url ?? "https://placehold.co/300x200?text=No+Image";
 
             return (

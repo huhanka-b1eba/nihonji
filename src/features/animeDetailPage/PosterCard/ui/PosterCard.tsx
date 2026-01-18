@@ -11,6 +11,7 @@ type Props = {
   className?: string;
 };
 
+// NOTE: больше похоже на виджет. Не сущность, потому что она не может импортировать в себя features AddToListButton по fsd
 export const PosterCard: React.FC<Props> = ({ poster, title, animeId, onOpenImage, className }) => {
   const myLikeAnime = `myLikeAnime:${animeId}`;
   const [isLike, setIsLike] = useState(false);
@@ -47,6 +48,7 @@ export const PosterCard: React.FC<Props> = ({ poster, title, animeId, onOpenImag
   };
 
   return (
+    // TODO: применить classNames для комбинации классов
     <div className={`${cls.posterCard} ${className ?? ""}`}>
       <div
         className={`${cls.zoomContainer} ${cls.zoomUpper}`}
@@ -67,6 +69,7 @@ export const PosterCard: React.FC<Props> = ({ poster, title, animeId, onOpenImag
 
       <div className={cls.actions}>
         <AddToListButton animeId={animeId} />
+        {/* TODO: вынести в фичу AnimuLikeButton */}
         <button
           className={`${cls.like} ${isLike ? cls.liked : ""}`}
           aria-pressed={isLike}

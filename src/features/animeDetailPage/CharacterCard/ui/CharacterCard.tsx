@@ -9,6 +9,7 @@ type Props = {
   onOpenImage?: (src: string | null, caption?: string | null) => void;
 };
 
+// NOTE: больше похоже на виджет/сущность
 export const CharacterCard: React.FC<Props> = ({ c, posterFallback, onOpenImage }) => {
   const charObj = c.character || c;
   const name = charObj?.name ?? "—";
@@ -23,6 +24,7 @@ export const CharacterCard: React.FC<Props> = ({ c, posterFallback, onOpenImage 
 
   return (
     <div className={cls.card}>
+      {/* NOTE: похоже на фичу */}
       <button
         type="button"
         className={cls.thumbButton}

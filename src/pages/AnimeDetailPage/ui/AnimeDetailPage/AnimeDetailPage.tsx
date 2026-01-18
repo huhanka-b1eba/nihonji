@@ -25,6 +25,7 @@ import { CharacterCard } from "features/animeDetailPage/CharacterCard";
 import { StaffCard } from "features/animeDetailPage/StaffCard";
 import cls from "./AnimeDetailPage.module.scss";
 import { useTranslation } from "react-i18next";
+// NOTE: рекомендуется внутри одного слоя использовать относительные импорты
 import { AnimeDetailSkeleton } from "pages/AnimeDetailPage/ui/AnimeDetailSkeleton/AnimeDetailSkeleton.tsx";
 
 type ViewSection = "overview" | "characters" | "staff";
@@ -36,6 +37,7 @@ interface AnimeDetailPageProps {
 export const AnimeDetailPage: React.FC<AnimeDetailPageProps> = ({ className }) => {
   const { id } = useParams<{ id?: string }>();
 
+  // TODO: всю работу с данными и их объединение в нужный для рендер формат можно вынести в отдельный хук useAnimeDetailData(id);
   const { data, error, isLoading } = useGetAnimeByIdQuery(id ?? "", { skip: !id });
   const { data: picturesData } = useGetAnimePictureQuery(id ?? "", { skip: !id });
   const { data: charactersData } = useGetAnimeCharactersQuery(id ?? "", { skip: !id });
@@ -49,6 +51,8 @@ export const AnimeDetailPage: React.FC<AnimeDetailPageProps> = ({ className }) =
 
   const { t } = useTranslation();
 
+  // TODO: все нижние преобразования можно вынести на уровень transformResponse и работать с уже подготовленными данными,
+  //  если точно знаешь что чистый picturesData нигде не понадобится на уровне рендера
   const pictures = useMemo(() => {
     if (!picturesData) return [];
     if (Array.isArray(picturesData)) return picturesData;
@@ -136,6 +140,10 @@ export const AnimeDetailPage: React.FC<AnimeDetailPageProps> = ({ className }) =
   });
   const watchUrl = toYouTubeWatchUrl(trailerRaw);
 
+  // NOTE: чтобы проще ориентироваться в больших компонентах, можно завести рядом директорию partials и складывать туда части-компоненты
+  // Например, вижу тут компоненты HeroPanel, MainContent, ImageModal
+  // В MainContent я бы сделала мапу renderContent = { overview: <OverviewSection />, characters: <Characters />, ...} и в return renderContent[activeSection];
+  // это позволит легко масштабировать компонент, если появится еще одно значение activeSection
   return (
     <div className={classNames(cls.AnimeDetailPage, {}, [className])}>
       <header className={cls.hero}>

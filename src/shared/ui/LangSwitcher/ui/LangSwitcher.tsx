@@ -11,6 +11,7 @@ export const LangSwitcher = ({ className }: LangSwitcherProps) => {
   const { t } = useTranslation();
 
   const toggleLanguage = () => {
+    // NOTE: ru/en тоже можно спрятать в какой-нибудь union, потому что могут прийти и попросить добавить больше языков
     const currentLang = i18n.language.startsWith("ru") ? "ru" : "en";
     const next = currentLang === "ru" ? "en" : "ru";
 

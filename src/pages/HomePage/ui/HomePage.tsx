@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 const HomePage: React.FC = () => {
   const { t } = useTranslation();
 
+  // NOTE: тоже спрятала бы в отдельный хук
   const {
     data: popularAnimeList,
     error: popularError,

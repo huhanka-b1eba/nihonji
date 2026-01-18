@@ -13,6 +13,7 @@ export const SectionHeader = ({ title, onShowAll, showAllLabel }: Props) => {
   return (
     <div className={cls.header}>
       <h3>{title}</h3>
+      {/* TODO: тоже можно в фичу ShowAllButton */}
       {onShowAll && <button onClick={onShowAll}>{showAllLabel ?? t("common.showAll")}</button>}
     </div>
   );

@@ -20,7 +20,9 @@ const SORT_OPTIONS = [
 const CatalogPage: React.FC = () => {
   const [page, setPage] = useState(1);
   const [allItems, setAllItems] = useState<Anime[]>([]);
+  // TODO: вынести в отдельный тип/enum
   const [sort, setSort] = useState<"popularity" | "score" | "rank" | "favorites" | undefined>();
+  // TODO: вынести в отдельный тип/enum на уровень shared, NoveltyPage тоже использует
   const [sortBool, setSortBool] = useState<"asc" | "desc">("asc");
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
@@ -73,6 +75,7 @@ const CatalogPage: React.FC = () => {
   const hasMore = lastFetchedCount === PAGE_LIMIT;
 
   useEffect(() => {
+    //  TODO: может быть переиспользован, подумай как вынести и сделать его абстрактным для всех возможных бесконечных списков в приложении
     if (observerRef.current) observerRef.current.disconnect();
 
     const sentinel = sentinelRef.current;

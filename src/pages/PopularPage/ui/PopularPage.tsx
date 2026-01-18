@@ -11,6 +11,16 @@ interface PopularPageProps {
   className?: string;
 }
 
+// TODO: кажется, что в NoveltyPage идентичная, выносим в shared
+const isKids = (a: Anime) => {
+  const raw = (a?.rating ?? "").toString().trim().toUpperCase();
+  if (!raw) return false;
+  if (/^G(\s|-|$)/.test(raw)) return true;
+  if (/^PG(\s|-)/.test(raw) && !/^PG-13/.test(raw)) return true;
+  return false;
+};
+
+// TODO: у тебя такие 4 штуки, скорее всего везде в апи всегда одно значение будет, поэтому смело на уровень shared
 const PAGE_LIMIT = 24;
 
 export const PopularPage: React.FC<PopularPageProps> = ({ className }) => {
@@ -19,6 +29,7 @@ export const PopularPage: React.FC<PopularPageProps> = ({ className }) => {
   const [sortBool, setSortBool] = useState<"asc" | "desc">("asc");
   const { t } = useTranslation();
 
+  // NOTE: работа с фильтрами везде тоже выглядит одинаковой, давай подумаем как можно сделать абстрактный хук, который будет применен везде ?
   const [filters, setFilters] = useState<GetAnimeArgs>({
     type: undefined,
     status: undefined,
@@ -51,14 +62,6 @@ export const PopularPage: React.FC<PopularPageProps> = ({ className }) => {
 
   useEffect(() => {
     if (!rawData || !Array.isArray(rawData)) return;
-
-    const isKids = (a: any) => {
-      const raw = (a?.rating ?? "").toString().trim().toUpperCase();
-      if (!raw) return false;
-      if (/^G(\s|-|$)/.test(raw)) return true;
-      if (/^PG(\s|-)/.test(raw) && !/^PG-13/.test(raw)) return true;
-      return false;
-    };
 
     setAllItems((prev) => {
       const pageItems = (rawData as Anime[]).filter((a) => !isKids(a));

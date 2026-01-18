@@ -13,6 +13,7 @@ interface PopularProps {
   className?: string;
 }
 
+// NOTE: больше на виджет похож
 export const Popular = ({ animeList, className }: PopularProps) => {
   const { t } = useTranslation();
 

@@ -27,6 +27,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // NOTE: избегай переменных из одной буквы, код должен читаться максимально просто
     const unsubscribe = onAuthChanged(async (u) => {
       setUser(u);
       if (u) {
@@ -84,6 +85,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
 export const useAuth = () => {
   const ctx = useContext(AuthContext);
+
   if (!ctx) throw new Error("useAuth must be used within AuthProvider");
   return ctx;
 };

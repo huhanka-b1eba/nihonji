@@ -24,6 +24,7 @@ body {
   padding-inline: var(--container-padding-desktop);
   box-sizing: border-box;
 
+  // NOTE: размерности экранов тоже лучше выносить в меременные: $breakpoint-sm/$breakpoint-md или $breakpoint-mobile/$breakpoint-tablet
   @media (width <= 1440px) {
     max-width: var(--container-max-xl);
   }

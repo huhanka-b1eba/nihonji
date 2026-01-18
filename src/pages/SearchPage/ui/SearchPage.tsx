@@ -5,8 +5,8 @@ import { classNames } from "shared/lib/classNames/classNames.ts";
 import { Loader } from "shared/ui/Loader";
 import { AnimeList } from "widgets/AnimeList";
 import { SearchInput } from "shared/ui/SearchInput/ui/SearchInput.tsx";
-import cls from "./SearchPage.module.scss";
 import { useTranslation } from "react-i18next";
+import cls from "./SearchPage.module.scss";
 
 interface SearchPageProps {
   className?: string;
@@ -24,6 +24,7 @@ export const SearchPage: React.FC<SearchPageProps> = ({ className }) => {
   const observerRef = useRef<IntersectionObserver | null>(null);
   const { t } = useTranslation();
 
+  // TODO: забыл про наличие useDebounceValue
   useEffect(() => {
     const t = setTimeout(() => setDebouncedQuery(query.trim()), DEBOUNCE_MS);
     return () => clearTimeout(t);
@@ -129,16 +130,28 @@ export const SearchPage: React.FC<SearchPageProps> = ({ className }) => {
           </div>
         </div>
 
-        {showEmptyPrompt && <div className={cls.hint}>{t("search.hint")}</div>}
-
-        {!showEmptyPrompt && (
+        {/* TODO: можно еще так код ниже переписать */}
+         {showEmptyPrompt ? (
+          <div className={cls.hint}>{t("search.hint")}</div>
+         ) : (
           <AnimeList
             items={allItems}
             isLoading={!!debouncedQuery && page === 1 && allItems.length === 0}
             skeletonCount={12}
             emptyText={t("search.noResults")}
           />
-        )}
+         )}
+
+        {/* {showEmptyPrompt && <div className={cls.hint}>{t("search.hint")}</div>} */}
+
+        {/* {!showEmptyPrompt && ( */}
+        {/*  <AnimeList */}
+        {/*    items={allItems} */}
+        {/*    isLoading={!!debouncedQuery && page === 1 && allItems.length === 0} */}
+        {/*    skeletonCount={12} */}
+        {/*    emptyText={t("search.noResults")} */}
+        {/*  /> */}
+        {/* )} */}
 
         {isFetching && !isLoading && allItems.length > 0 && (
           <div className={cls.fetching}>

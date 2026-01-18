@@ -15,6 +15,7 @@ export const News = ({ className }: NewsProps) => {
 
   const homeNews = news.slice(0, 10);
 
+  // NOTE: ошибка должна быть залогировано на уровне работы с данными в useMultiAnimeNews, тут рендер "Ooops..." должен быть на этот случай
   if (error) console.error(error);
 
   return (

@@ -25,10 +25,12 @@ export const SearchInput: React.FC<SearchInputProps> = ({
   const debounced = useDebouncedValue(value, debounceMs);
 
   useEffect(() => {
+    // можно вот так сократить: onChange?.(value);
     if (onChange) onChange(value);
   }, [value]);
 
   useEffect(() => {
+    // можно вот так сократить: onDebounced?.(debounced);
     if (onDebounced) onDebounced(debounced);
   }, [debounced]);
 

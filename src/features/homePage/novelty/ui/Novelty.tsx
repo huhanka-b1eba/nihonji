@@ -11,6 +11,7 @@ interface NoveltyProps {
   animeList: Anime[];
 }
 
+// NOTE: больше на виджет похож
 export const Novelty = ({ animeList, className }: NoveltyProps) => {
   const { t } = useTranslation();
 

@@ -5,6 +5,7 @@ import { type GetAnimeArgs } from "entities/anime/api/animeApi.ts";
 import cls from "./ListHeader.module.scss";
 import { useTranslation } from "react-i18next";
 
+// NOTE: о, нашелся! может быть расшарен на те, страницы, где я писала об общем типе для этих значений
 type SortDir = "asc" | "desc";
 
 interface ListHeaderProps {
@@ -134,6 +135,7 @@ export const ListHeader = ({
               </div>
             </div>
 
+            {/* NOTE: потенциальный FilterActions компонент в фиче с фильтрами */}
             <div className={cls.footer}>
               <button
                 className={cls.reset}

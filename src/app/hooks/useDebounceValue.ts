@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+// TODO: перенести в shared/hooks
 function useDebounceValue<T>(value: T, ms = 500) {
   const [debounce, setDebounce] = useState<T>(value);
 

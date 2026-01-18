@@ -1,3 +1,4 @@
+// TODO: на все эти функции-хелперы как раз было бы здорово написать тесты, легко сломать
 export function getYouTubeId(input?: string | null): string | null {
   if (!input) return null;
   const s = input.trim();

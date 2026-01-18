@@ -14,6 +14,7 @@
   box-sizing: border-box;
 }
 
+// TODO: похоже, что есть дубляж, можно подумать об компоненте-обертке HeroPanel с использованием пропса children
 /* hero with waves */
 .hero {
   position: relative;

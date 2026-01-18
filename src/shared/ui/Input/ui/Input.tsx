@@ -7,6 +7,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 export const Input: React.FC<InputProps> = ({ label, className, ...rest }) => (
+  // TODO: применить classNames для комбинации классов
   <div className={`${cls.field} ${className ?? ""}`}>
     {label && <label>{label}</label>}
     <input {...rest} />

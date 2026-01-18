@@ -1,5 +1,6 @@
 import { Star } from "lucide-react";
 import { classNames } from "shared/lib/classNames/classNames.ts";
+// NOTE: чаще всего используют styles для импорта модульных стилей: import styles from "./AnimeCard.module.scss";
 import cls from "./AnimeCard.module.scss";
 import type { Anime } from "../../model/anime.ts";
 
@@ -8,6 +9,8 @@ interface AnimeCardProps {
   className?: string;
 }
 
+// TODO: компонент всегда должен что-то возвращать, лучше проверяй наличие img выше и не заходи сюда,
+//  либо придумай заглушку на случай, если img нет, ну или return null
 export const AnimeCard = ({ anime, className }: AnimeCardProps) => {
   const img =
     anime.images?.jpg?.large_image_url ||

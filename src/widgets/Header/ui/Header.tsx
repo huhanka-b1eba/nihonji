@@ -67,6 +67,7 @@ const Header = () => {
             <Link to="/" className={cls.logo}>
               Nihonji
             </Link>
+            {/* NOTE: вынесла бы в отдельный массив headerLinks и проходилась бы по нему, проще добавить новую ссылку в будущем */}
             <div className={cls.links}>
               <Link to="/novelty" className={cls.navLink}>
                 {t("header.links.novelty")}
@@ -119,6 +120,7 @@ const Header = () => {
           )}
         </div>
       </div>
+      {/* NOTE: вынести в отдельный компонент MobileMenu, можешь еще React.Portal изучить и попробовать применить здесь */}
       {mobileMenuOpen && (
           <div
               className={cls.mobileOverlay}
